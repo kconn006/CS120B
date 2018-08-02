@@ -6,7 +6,7 @@
  */ 
 #include <avr/io.h>
 
-enum States{INIT, output7, reset, decrement, increment} state;
+enum States{INIT, output7, button_pressed, button_released, reset, decrement, increment} state;
 unsigned char button0 = 0x00;
 unsigned char button1 = 0x00;
 unsigned char tempC = 0x00;

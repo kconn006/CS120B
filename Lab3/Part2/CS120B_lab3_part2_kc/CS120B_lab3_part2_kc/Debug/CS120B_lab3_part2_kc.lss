@@ -3,31 +3,31 @@ CS120B_lab3_part2_kc.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  00000310  2**0
+  0 .data         00000000  00800100  00800100  0000036a  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000029c  00000000  00000000  00000074  2**1
+  1 .text         000002f6  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000005  00800100  00800100  00000310  2**0
+  2 .bss          00000005  00800100  00800100  0000036a  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000310  2**0
+  3 .comment      00000030  00000000  00000000  0000036a  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000340  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000039c  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000028  00000000  00000000  00000380  2**0
+  5 .debug_aranges 00000028  00000000  00000000  000003dc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000008a5  00000000  00000000  000003a8  2**0
+  6 .debug_info   000008b1  00000000  00000000  00000404  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000007bd  00000000  00000000  00000c4d  2**0
+  7 .debug_abbrev 000007bd  00000000  00000000  00000cb5  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000003ad  00000000  00000000  0000140a  2**0
+  8 .debug_line   0000040a  00000000  00000000  00001472  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000054  00000000  00000000  000017b8  2**2
+  9 .debug_frame  00000054  00000000  00000000  0000187c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000043a  00000000  00000000  0000180c  2**0
+ 10 .debug_str    00000459  00000000  00000000  000018d0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000076  00000000  00000000  00001c46  2**0
+ 11 .debug_loc    00000076  00000000  00000000  00001d29  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000018  00000000  00000000  00001cbc  2**0
+ 12 .debug_ranges 00000018  00000000  00000000  00001d9f  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -125,14 +125,14 @@ Disassembly of section .text:
   a2:	a5 30       	cpi	r26, 0x05	; 5
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
-  a8:	d2 d0       	rcall	.+420    	; 0x24e <main>
-  aa:	f6 c0       	rjmp	.+492    	; 0x298 <_exit>
+  a8:	ff d0       	rcall	.+510    	; 0x2a8 <main>
+  aa:	23 c1       	rjmp	.+582    	; 0x2f2 <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
 
 000000ae <Tick>:
-enum States{INIT, output7, reset, decrement, increment} state;
+enum States{INIT, output7, button_pressed, button_released, reset, decrement, increment} state;
 unsigned char button0 = 0x00;
 unsigned char button1 = 0x00;
 unsigned char tempC = 0x00;
@@ -161,42 +161,42 @@ void Tick() {
 	switch(state) 
   d2:	80 91 03 01 	lds	r24, 0x0103	; 0x800103 <state>
   d6:	90 91 04 01 	lds	r25, 0x0104	; 0x800104 <state+0x1>
-  da:	82 30       	cpi	r24, 0x02	; 2
+  da:	84 30       	cpi	r24, 0x04	; 4
   dc:	91 05       	cpc	r25, r1
   de:	d9 f1       	breq	.+118    	; 0x156 <Tick+0xa8>
-  e0:	83 30       	cpi	r24, 0x03	; 3
+  e0:	85 30       	cpi	r24, 0x05	; 5
   e2:	91 05       	cpc	r25, r1
   e4:	28 f4       	brcc	.+10     	; 0xf0 <Tick+0x42>
   e6:	00 97       	sbiw	r24, 0x00	; 0
   e8:	51 f0       	breq	.+20     	; 0xfe <Tick+0x50>
   ea:	01 97       	sbiw	r24, 0x01	; 1
   ec:	79 f0       	breq	.+30     	; 0x10c <Tick+0x5e>
+				state = increment;
 			}
-			
 			state = INIT;
 			break;
 		default:
 			break;
-  ee:	76 c0       	rjmp	.+236    	; 0x1dc <Tick+0x12e>
+  ee:	a3 c0       	rjmp	.+326    	; 0x236 <Tick+0x188>
 void Tick() {
 	
 	button0 = PINA & 0x01; //PA0
 	button1 = PINA & 0x02; //PA1
 	
 	switch(state) 
-  f0:	83 30       	cpi	r24, 0x03	; 3
+  f0:	85 30       	cpi	r24, 0x05	; 5
   f2:	91 05       	cpc	r25, r1
   f4:	09 f4       	brne	.+2      	; 0xf8 <Tick+0x4a>
-  f6:	53 c0       	rjmp	.+166    	; 0x19e <Tick+0xf0>
-  f8:	04 97       	sbiw	r24, 0x04	; 4
+  f6:	6a c0       	rjmp	.+212    	; 0x1cc <Tick+0x11e>
+  f8:	06 97       	sbiw	r24, 0x06	; 6
   fa:	91 f1       	breq	.+100    	; 0x160 <Tick+0xb2>
+				state = increment;
 			}
-			
 			state = INIT;
 			break;
 		default:
 			break;
-  fc:	6f c0       	rjmp	.+222    	; 0x1dc <Tick+0x12e>
+  fc:	9c c0       	rjmp	.+312    	; 0x236 <Tick+0x188>
 	button1 = PINA & 0x02; //PA1
 	
 	switch(state) 
@@ -208,7 +208,7 @@ void Tick() {
  102:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
  106:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
 			break;
- 10a:	68 c0       	rjmp	.+208    	; 0x1dc <Tick+0x12e>
+ 10a:	95 c0       	rjmp	.+298    	; 0x236 <Tick+0x188>
 		case output7:
 			if (button0 && button1) {
  10c:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
@@ -218,12 +218,12 @@ void Tick() {
  118:	88 23       	and	r24, r24
  11a:	39 f0       	breq	.+14     	; 0x12a <Tick+0x7c>
 				state = reset;
- 11c:	82 e0       	ldi	r24, 0x02	; 2
+ 11c:	84 e0       	ldi	r24, 0x04	; 4
  11e:	90 e0       	ldi	r25, 0x00	; 0
  120:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
  124:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
 				break;
- 128:	59 c0       	rjmp	.+178    	; 0x1dc <Tick+0x12e>
+ 128:	86 c0       	rjmp	.+268    	; 0x236 <Tick+0x188>
 			}
 			if (button0)
  12a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
@@ -231,12 +231,12 @@ void Tick() {
  130:	39 f0       	breq	.+14     	; 0x140 <Tick+0x92>
 			{
 				state = increment;
- 132:	84 e0       	ldi	r24, 0x04	; 4
+ 132:	86 e0       	ldi	r24, 0x06	; 6
  134:	90 e0       	ldi	r25, 0x00	; 0
  136:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
  13a:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
 				break;
- 13e:	4e c0       	rjmp	.+156    	; 0x1dc <Tick+0x12e>
+ 13e:	7b c0       	rjmp	.+246    	; 0x236 <Tick+0x188>
 			}
 			if (button1)
  140:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <button1>
@@ -244,19 +244,19 @@ void Tick() {
  146:	39 f0       	breq	.+14     	; 0x156 <Tick+0xa8>
 			{
 				state = decrement;
- 148:	83 e0       	ldi	r24, 0x03	; 3
+ 148:	85 e0       	ldi	r24, 0x05	; 5
  14a:	90 e0       	ldi	r25, 0x00	; 0
  14c:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
  150:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
 				break;
- 154:	43 c0       	rjmp	.+134    	; 0x1dc <Tick+0x12e>
+ 154:	70 c0       	rjmp	.+224    	; 0x236 <Tick+0x188>
 			}
 		case reset:
 			state = INIT;
  156:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <state+0x1>
  15a:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <state>
 			break;
- 15e:	3e c0       	rjmp	.+124    	; 0x1dc <Tick+0x12e>
+ 15e:	6b c0       	rjmp	.+214    	; 0x236 <Tick+0x188>
 		case increment:
 			if (button0 && button1) 
  160:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
@@ -267,236 +267,283 @@ void Tick() {
  16e:	39 f0       	breq	.+14     	; 0x17e <Tick+0xd0>
 				{
 					state = reset;
- 170:	82 e0       	ldi	r24, 0x02	; 2
+ 170:	84 e0       	ldi	r24, 0x04	; 4
  172:	90 e0       	ldi	r25, 0x00	; 0
  174:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
  178:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
 					break;
- 17c:	2f c0       	rjmp	.+94     	; 0x1dc <Tick+0x12e>
+ 17c:	5c c0       	rjmp	.+184    	; 0x236 <Tick+0x188>
 				}
-			if (tempC < 9)
- 17e:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <tempC>
- 182:	89 30       	cpi	r24, 0x09	; 9
- 184:	38 f4       	brcc	.+14     	; 0x194 <Tick+0xe6>
+			if (button0 && !button1)
+ 17e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 182:	88 23       	and	r24, r24
+ 184:	79 f0       	breq	.+30     	; 0x1a4 <Tick+0xf6>
+ 186:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <button1>
+ 18a:	88 23       	and	r24, r24
+ 18c:	59 f4       	brne	.+22     	; 0x1a4 <Tick+0xf6>
 			{
-				state = increment;
- 186:	84 e0       	ldi	r24, 0x04	; 4
- 188:	90 e0       	ldi	r25, 0x00	; 0
- 18a:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
- 18e:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
-				break;
- 192:	24 c0       	rjmp	.+72     	; 0x1dc <Tick+0x12e>
-			}
-			
-			state = INIT;
- 194:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <state+0x1>
- 198:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <state>
-			break;
- 19c:	1f c0       	rjmp	.+62     	; 0x1dc <Tick+0x12e>
-		case decrement:
-			if (button0 && button1) 
- 19e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
- 1a2:	88 23       	and	r24, r24
- 1a4:	59 f0       	breq	.+22     	; 0x1bc <Tick+0x10e>
- 1a6:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <button1>
- 1aa:	88 23       	and	r24, r24
- 1ac:	39 f0       	breq	.+14     	; 0x1bc <Tick+0x10e>
+				if (tempC < 9)
+ 18e:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <tempC>
+ 192:	89 30       	cpi	r24, 0x09	; 9
+ 194:	38 f4       	brcc	.+14     	; 0x1a4 <Tick+0xf6>
 				{
-					state = reset;
- 1ae:	82 e0       	ldi	r24, 0x02	; 2
- 1b0:	90 e0       	ldi	r25, 0x00	; 0
- 1b2:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
- 1b6:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
+					state = increment;
+ 196:	86 e0       	ldi	r24, 0x06	; 6
+ 198:	90 e0       	ldi	r25, 0x00	; 0
+ 19a:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
+ 19e:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
 					break;
- 1ba:	10 c0       	rjmp	.+32     	; 0x1dc <Tick+0x12e>
-				}
-			if (tempC > 0)
- 1bc:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <tempC>
- 1c0:	88 23       	and	r24, r24
- 1c2:	39 f0       	breq	.+14     	; 0x1d2 <Tick+0x124>
+ 1a2:	49 c0       	rjmp	.+146    	; 0x236 <Tick+0x188>
+				}	
+			}
+			if (!button0 && button1)
+ 1a4:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 1a8:	88 23       	and	r24, r24
+ 1aa:	59 f4       	brne	.+22     	; 0x1c2 <Tick+0x114>
+ 1ac:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <button1>
+ 1b0:	88 23       	and	r24, r24
+ 1b2:	39 f0       	breq	.+14     	; 0x1c2 <Tick+0x114>
 			{
 				state = decrement;
- 1c4:	83 e0       	ldi	r24, 0x03	; 3
- 1c6:	90 e0       	ldi	r25, 0x00	; 0
- 1c8:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
- 1cc:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
+ 1b4:	85 e0       	ldi	r24, 0x05	; 5
+ 1b6:	90 e0       	ldi	r25, 0x00	; 0
+ 1b8:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
+ 1bc:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
 				break;
- 1d0:	05 c0       	rjmp	.+10     	; 0x1dc <Tick+0x12e>
+ 1c0:	3a c0       	rjmp	.+116    	; 0x236 <Tick+0x188>
 			}
-			
 			state = INIT;
- 1d2:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <state+0x1>
- 1d6:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <state>
+ 1c2:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <state+0x1>
+ 1c6:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <state>
 			break;
- 1da:	00 00       	nop
+ 1ca:	35 c0       	rjmp	.+106    	; 0x236 <Tick+0x188>
+		case decrement:
+			if (button0 && button1) 
+ 1cc:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 1d0:	88 23       	and	r24, r24
+ 1d2:	59 f0       	breq	.+22     	; 0x1ea <Tick+0x13c>
+ 1d4:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <button1>
+ 1d8:	88 23       	and	r24, r24
+ 1da:	39 f0       	breq	.+14     	; 0x1ea <Tick+0x13c>
+				{
+					state = reset;
+ 1dc:	84 e0       	ldi	r24, 0x04	; 4
+ 1de:	90 e0       	ldi	r25, 0x00	; 0
+ 1e0:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
+ 1e4:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
+					break;
+ 1e8:	26 c0       	rjmp	.+76     	; 0x236 <Tick+0x188>
+				}
+			if (button1 && !button0)
+ 1ea:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <button1>
+ 1ee:	88 23       	and	r24, r24
+ 1f0:	79 f0       	breq	.+30     	; 0x210 <Tick+0x162>
+ 1f2:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 1f6:	88 23       	and	r24, r24
+ 1f8:	59 f4       	brne	.+22     	; 0x210 <Tick+0x162>
+				{
+					if (tempC > 0)
+ 1fa:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <tempC>
+ 1fe:	88 23       	and	r24, r24
+ 200:	39 f0       	breq	.+14     	; 0x210 <Tick+0x162>
+					{
+						state = decrement;
+ 202:	85 e0       	ldi	r24, 0x05	; 5
+ 204:	90 e0       	ldi	r25, 0x00	; 0
+ 206:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
+ 20a:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
+						break;
+ 20e:	13 c0       	rjmp	.+38     	; 0x236 <Tick+0x188>
+					}
+					
+				}
+			if (!button1 && button0)
+ 210:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <button1>
+ 214:	88 23       	and	r24, r24
+ 216:	51 f4       	brne	.+20     	; 0x22c <Tick+0x17e>
+ 218:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 21c:	88 23       	and	r24, r24
+ 21e:	31 f0       	breq	.+12     	; 0x22c <Tick+0x17e>
+			{
+				state = increment;
+ 220:	86 e0       	ldi	r24, 0x06	; 6
+ 222:	90 e0       	ldi	r25, 0x00	; 0
+ 224:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <state+0x1>
+ 228:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <state>
+			}
+			state = INIT;
+ 22c:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <state+0x1>
+ 230:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <state>
+			break;
+ 234:	00 00       	nop
 		default:
 			break;
 	}
 
 	switch(state)
- 1dc:	80 91 03 01 	lds	r24, 0x0103	; 0x800103 <state>
- 1e0:	90 91 04 01 	lds	r25, 0x0104	; 0x800104 <state+0x1>
- 1e4:	82 30       	cpi	r24, 0x02	; 2
- 1e6:	91 05       	cpc	r25, r1
- 1e8:	91 f0       	breq	.+36     	; 0x20e <Tick+0x160>
- 1ea:	83 30       	cpi	r24, 0x03	; 3
- 1ec:	91 05       	cpc	r25, r1
- 1ee:	28 f4       	brcc	.+10     	; 0x1fa <Tick+0x14c>
- 1f0:	00 97       	sbiw	r24, 0x00	; 0
- 1f2:	21 f1       	breq	.+72     	; 0x23c <Tick+0x18e>
- 1f4:	01 97       	sbiw	r24, 0x01	; 1
- 1f6:	39 f0       	breq	.+14     	; 0x206 <Tick+0x158>
+ 236:	80 91 03 01 	lds	r24, 0x0103	; 0x800103 <state>
+ 23a:	90 91 04 01 	lds	r25, 0x0104	; 0x800104 <state+0x1>
+ 23e:	84 30       	cpi	r24, 0x04	; 4
+ 240:	91 05       	cpc	r25, r1
+ 242:	91 f0       	breq	.+36     	; 0x268 <Tick+0x1ba>
+ 244:	85 30       	cpi	r24, 0x05	; 5
+ 246:	91 05       	cpc	r25, r1
+ 248:	28 f4       	brcc	.+10     	; 0x254 <Tick+0x1a6>
+ 24a:	00 97       	sbiw	r24, 0x00	; 0
+ 24c:	21 f1       	breq	.+72     	; 0x296 <Tick+0x1e8>
+ 24e:	01 97       	sbiw	r24, 0x01	; 1
+ 250:	39 f0       	breq	.+14     	; 0x260 <Tick+0x1b2>
 					tempC = tempC-1;
 				}
 			break;
 			
 		default:
 			break;
- 1f8:	26 c0       	rjmp	.+76     	; 0x246 <Tick+0x198>
+ 252:	26 c0       	rjmp	.+76     	; 0x2a0 <Tick+0x1f2>
 			break;
 		default:
 			break;
 	}
 
 	switch(state)
- 1fa:	83 30       	cpi	r24, 0x03	; 3
- 1fc:	91 05       	cpc	r25, r1
- 1fe:	a1 f0       	breq	.+40     	; 0x228 <Tick+0x17a>
- 200:	04 97       	sbiw	r24, 0x04	; 4
- 202:	41 f0       	breq	.+16     	; 0x214 <Tick+0x166>
+ 254:	85 30       	cpi	r24, 0x05	; 5
+ 256:	91 05       	cpc	r25, r1
+ 258:	a1 f0       	breq	.+40     	; 0x282 <Tick+0x1d4>
+ 25a:	06 97       	sbiw	r24, 0x06	; 6
+ 25c:	41 f0       	breq	.+16     	; 0x26e <Tick+0x1c0>
 					tempC = tempC-1;
 				}
 			break;
 			
 		default:
 			break;
- 204:	20 c0       	rjmp	.+64     	; 0x246 <Tick+0x198>
+ 25e:	20 c0       	rjmp	.+64     	; 0x2a0 <Tick+0x1f2>
 	switch(state)
 	{//State actions 
 		case INIT:
 			break;
 		case output7:
 			tempC = 0x07;
- 206:	87 e0       	ldi	r24, 0x07	; 7
- 208:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <tempC>
+ 260:	87 e0       	ldi	r24, 0x07	; 7
+ 262:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <tempC>
 			break;
- 20c:	1c c0       	rjmp	.+56     	; 0x246 <Tick+0x198>
+ 266:	1c c0       	rjmp	.+56     	; 0x2a0 <Tick+0x1f2>
 		case reset:
 			tempC = 0x00;
- 20e:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <tempC>
+ 268:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <tempC>
 			break;
- 212:	19 c0       	rjmp	.+50     	; 0x246 <Tick+0x198>
+ 26c:	19 c0       	rjmp	.+50     	; 0x2a0 <Tick+0x1f2>
 		case increment:
-			if (tempC < 9)
- 214:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <tempC>
- 218:	89 30       	cpi	r24, 0x09	; 9
- 21a:	90 f4       	brcc	.+36     	; 0x240 <Tick+0x192>
+			if (button0)
+ 26e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 272:	88 23       	and	r24, r24
+ 274:	91 f0       	breq	.+36     	; 0x29a <Tick+0x1ec>
 				{
 					tempC = tempC+1;
- 21c:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <tempC>
- 220:	8f 5f       	subi	r24, 0xFF	; 255
- 222:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <tempC>
+ 276:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <tempC>
+ 27a:	8f 5f       	subi	r24, 0xFF	; 255
+ 27c:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <tempC>
 				}
 			break;
- 226:	0c c0       	rjmp	.+24     	; 0x240 <Tick+0x192>
+ 280:	0c c0       	rjmp	.+24     	; 0x29a <Tick+0x1ec>
 		case decrement:
-			if (tempC < 9)
- 228:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <tempC>
- 22c:	89 30       	cpi	r24, 0x09	; 9
- 22e:	50 f4       	brcc	.+20     	; 0x244 <Tick+0x196>
+			if (button1)
+ 282:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <button1>
+ 286:	88 23       	and	r24, r24
+ 288:	51 f0       	breq	.+20     	; 0x29e <Tick+0x1f0>
 				{
 					tempC = tempC-1;
- 230:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <tempC>
- 234:	81 50       	subi	r24, 0x01	; 1
- 236:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <tempC>
+ 28a:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <tempC>
+ 28e:	81 50       	subi	r24, 0x01	; 1
+ 290:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <tempC>
 				}
 			break;
- 23a:	04 c0       	rjmp	.+8      	; 0x244 <Tick+0x196>
+ 294:	04 c0       	rjmp	.+8      	; 0x29e <Tick+0x1f0>
 	}
 
 	switch(state)
 	{//State actions 
 		case INIT:
 			break;
- 23c:	00 00       	nop
- 23e:	03 c0       	rjmp	.+6      	; 0x246 <Tick+0x198>
+ 296:	00 00       	nop
+ 298:	03 c0       	rjmp	.+6      	; 0x2a0 <Tick+0x1f2>
 		case increment:
-			if (tempC < 9)
+			if (button0)
 				{
 					tempC = tempC+1;
 				}
 			break;
- 240:	00 00       	nop
- 242:	01 c0       	rjmp	.+2      	; 0x246 <Tick+0x198>
+ 29a:	00 00       	nop
+ 29c:	01 c0       	rjmp	.+2      	; 0x2a0 <Tick+0x1f2>
 		case decrement:
-			if (tempC < 9)
+			if (button1)
 				{
 					tempC = tempC-1;
 				}
 			break;
- 244:	00 00       	nop
+ 29e:	00 00       	nop
 			
 		default:
 			break;
 				
 	}
 }
- 246:	00 00       	nop
- 248:	df 91       	pop	r29
- 24a:	cf 91       	pop	r28
- 24c:	08 95       	ret
+ 2a0:	00 00       	nop
+ 2a2:	df 91       	pop	r29
+ 2a4:	cf 91       	pop	r28
+ 2a6:	08 95       	ret
 
-0000024e <main>:
+000002a8 <main>:
 
 int main(void) {
- 24e:	cf 93       	push	r28
- 250:	df 93       	push	r29
- 252:	cd b7       	in	r28, 0x3d	; 61
- 254:	de b7       	in	r29, 0x3e	; 62
+ 2a8:	cf 93       	push	r28
+ 2aa:	df 93       	push	r29
+ 2ac:	cd b7       	in	r28, 0x3d	; 61
+ 2ae:	de b7       	in	r29, 0x3e	; 62
 	
 	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
- 256:	81 e2       	ldi	r24, 0x21	; 33
- 258:	90 e0       	ldi	r25, 0x00	; 0
- 25a:	fc 01       	movw	r30, r24
- 25c:	10 82       	st	Z, r1
- 25e:	82 e2       	ldi	r24, 0x22	; 34
- 260:	90 e0       	ldi	r25, 0x00	; 0
- 262:	2f ef       	ldi	r18, 0xFF	; 255
- 264:	fc 01       	movw	r30, r24
- 266:	20 83       	st	Z, r18
+ 2b0:	81 e2       	ldi	r24, 0x21	; 33
+ 2b2:	90 e0       	ldi	r25, 0x00	; 0
+ 2b4:	fc 01       	movw	r30, r24
+ 2b6:	10 82       	st	Z, r1
+ 2b8:	82 e2       	ldi	r24, 0x22	; 34
+ 2ba:	90 e0       	ldi	r25, 0x00	; 0
+ 2bc:	2f ef       	ldi	r18, 0xFF	; 255
+ 2be:	fc 01       	movw	r30, r24
+ 2c0:	20 83       	st	Z, r18
 	DDRC = 0xFF; PORTC = 0x01; // Configure port C's 8 pins as outputs
- 268:	87 e2       	ldi	r24, 0x27	; 39
- 26a:	90 e0       	ldi	r25, 0x00	; 0
- 26c:	2f ef       	ldi	r18, 0xFF	; 255
- 26e:	fc 01       	movw	r30, r24
- 270:	20 83       	st	Z, r18
- 272:	88 e2       	ldi	r24, 0x28	; 40
- 274:	90 e0       	ldi	r25, 0x00	; 0
- 276:	21 e0       	ldi	r18, 0x01	; 1
- 278:	fc 01       	movw	r30, r24
- 27a:	20 83       	st	Z, r18
+ 2c2:	87 e2       	ldi	r24, 0x27	; 39
+ 2c4:	90 e0       	ldi	r25, 0x00	; 0
+ 2c6:	2f ef       	ldi	r18, 0xFF	; 255
+ 2c8:	fc 01       	movw	r30, r24
+ 2ca:	20 83       	st	Z, r18
+ 2cc:	88 e2       	ldi	r24, 0x28	; 40
+ 2ce:	90 e0       	ldi	r25, 0x00	; 0
+ 2d0:	21 e0       	ldi	r18, 0x01	; 1
+ 2d2:	fc 01       	movw	r30, r24
+ 2d4:	20 83       	st	Z, r18
 	
 
 	tempC = 0;
- 27c:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <tempC>
+ 2d6:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <tempC>
 	state = INIT;
- 280:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <state+0x1>
- 284:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <state>
+ 2da:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <state+0x1>
+ 2de:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <state>
 
 	while(1) {
 		Tick();
- 288:	12 df       	rcall	.-476    	; 0xae <Tick>
+ 2e2:	e5 de       	rcall	.-566    	; 0xae <Tick>
 		PORTC = tempC;
- 28a:	88 e2       	ldi	r24, 0x28	; 40
- 28c:	90 e0       	ldi	r25, 0x00	; 0
- 28e:	20 91 02 01 	lds	r18, 0x0102	; 0x800102 <tempC>
- 292:	fc 01       	movw	r30, r24
- 294:	20 83       	st	Z, r18
+ 2e4:	88 e2       	ldi	r24, 0x28	; 40
+ 2e6:	90 e0       	ldi	r25, 0x00	; 0
+ 2e8:	20 91 02 01 	lds	r18, 0x0102	; 0x800102 <tempC>
+ 2ec:	fc 01       	movw	r30, r24
+ 2ee:	20 83       	st	Z, r18
 	}
- 296:	f8 cf       	rjmp	.-16     	; 0x288 <main+0x3a>
+ 2f0:	f8 cf       	rjmp	.-16     	; 0x2e2 <main+0x3a>
 
-00000298 <_exit>:
- 298:	f8 94       	cli
+000002f2 <_exit>:
+ 2f2:	f8 94       	cli
 
-0000029a <__stop_program>:
- 29a:	ff cf       	rjmp	.-2      	; 0x29a <__stop_program>
+000002f4 <__stop_program>:
+ 2f4:	ff cf       	rjmp	.-2      	; 0x2f4 <__stop_program>
