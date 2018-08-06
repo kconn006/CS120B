@@ -1,0 +1,349 @@
+
+CS120B_lab4_part1.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  00000234  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000001e0  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  00000234  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000264  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000030  00000000  00000000  000002a4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000008b0  00000000  00000000  000002d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000007b6  00000000  00000000  00000b84  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000346  00000000  00000000  0000133a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000074  00000000  00000000  00001680  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003fd  00000000  00000000  000016f4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000d8  00000000  00000000  00001af1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000020  00000000  00000000  00001bc9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	45 c0       	rjmp	.+138    	; 0x8c <__ctors_end>
+   2:	00 00       	nop
+   4:	4b c0       	rjmp	.+150    	; 0x9c <__bad_interrupt>
+   6:	00 00       	nop
+   8:	49 c0       	rjmp	.+146    	; 0x9c <__bad_interrupt>
+   a:	00 00       	nop
+   c:	47 c0       	rjmp	.+142    	; 0x9c <__bad_interrupt>
+   e:	00 00       	nop
+  10:	45 c0       	rjmp	.+138    	; 0x9c <__bad_interrupt>
+  12:	00 00       	nop
+  14:	43 c0       	rjmp	.+134    	; 0x9c <__bad_interrupt>
+  16:	00 00       	nop
+  18:	41 c0       	rjmp	.+130    	; 0x9c <__bad_interrupt>
+  1a:	00 00       	nop
+  1c:	3f c0       	rjmp	.+126    	; 0x9c <__bad_interrupt>
+  1e:	00 00       	nop
+  20:	3d c0       	rjmp	.+122    	; 0x9c <__bad_interrupt>
+  22:	00 00       	nop
+  24:	3b c0       	rjmp	.+118    	; 0x9c <__bad_interrupt>
+  26:	00 00       	nop
+  28:	39 c0       	rjmp	.+114    	; 0x9c <__bad_interrupt>
+  2a:	00 00       	nop
+  2c:	37 c0       	rjmp	.+110    	; 0x9c <__bad_interrupt>
+  2e:	00 00       	nop
+  30:	35 c0       	rjmp	.+106    	; 0x9c <__bad_interrupt>
+  32:	00 00       	nop
+  34:	33 c0       	rjmp	.+102    	; 0x9c <__bad_interrupt>
+  36:	00 00       	nop
+  38:	31 c0       	rjmp	.+98     	; 0x9c <__bad_interrupt>
+  3a:	00 00       	nop
+  3c:	2f c0       	rjmp	.+94     	; 0x9c <__bad_interrupt>
+  3e:	00 00       	nop
+  40:	2d c0       	rjmp	.+90     	; 0x9c <__bad_interrupt>
+  42:	00 00       	nop
+  44:	2b c0       	rjmp	.+86     	; 0x9c <__bad_interrupt>
+  46:	00 00       	nop
+  48:	29 c0       	rjmp	.+82     	; 0x9c <__bad_interrupt>
+  4a:	00 00       	nop
+  4c:	27 c0       	rjmp	.+78     	; 0x9c <__bad_interrupt>
+  4e:	00 00       	nop
+  50:	25 c0       	rjmp	.+74     	; 0x9c <__bad_interrupt>
+  52:	00 00       	nop
+  54:	23 c0       	rjmp	.+70     	; 0x9c <__bad_interrupt>
+  56:	00 00       	nop
+  58:	21 c0       	rjmp	.+66     	; 0x9c <__bad_interrupt>
+  5a:	00 00       	nop
+  5c:	1f c0       	rjmp	.+62     	; 0x9c <__bad_interrupt>
+  5e:	00 00       	nop
+  60:	1d c0       	rjmp	.+58     	; 0x9c <__bad_interrupt>
+  62:	00 00       	nop
+  64:	1b c0       	rjmp	.+54     	; 0x9c <__bad_interrupt>
+  66:	00 00       	nop
+  68:	19 c0       	rjmp	.+50     	; 0x9c <__bad_interrupt>
+  6a:	00 00       	nop
+  6c:	17 c0       	rjmp	.+46     	; 0x9c <__bad_interrupt>
+  6e:	00 00       	nop
+  70:	15 c0       	rjmp	.+42     	; 0x9c <__bad_interrupt>
+  72:	00 00       	nop
+  74:	13 c0       	rjmp	.+38     	; 0x9c <__bad_interrupt>
+  76:	00 00       	nop
+  78:	11 c0       	rjmp	.+34     	; 0x9c <__bad_interrupt>
+  7a:	00 00       	nop
+  7c:	0f c0       	rjmp	.+30     	; 0x9c <__bad_interrupt>
+  7e:	00 00       	nop
+  80:	0d c0       	rjmp	.+26     	; 0x9c <__bad_interrupt>
+  82:	00 00       	nop
+  84:	0b c0       	rjmp	.+22     	; 0x9c <__bad_interrupt>
+  86:	00 00       	nop
+  88:	09 c0       	rjmp	.+18     	; 0x9c <__bad_interrupt>
+	...
+
+0000008c <__ctors_end>:
+  8c:	11 24       	eor	r1, r1
+  8e:	1f be       	out	0x3f, r1	; 63
+  90:	cf ef       	ldi	r28, 0xFF	; 255
+  92:	d0 e4       	ldi	r29, 0x40	; 64
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	cd bf       	out	0x3d, r28	; 61
+  98:	30 d0       	rcall	.+96     	; 0xfa <main>
+  9a:	a0 c0       	rjmp	.+320    	; 0x1dc <_exit>
+
+0000009c <__bad_interrupt>:
+  9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
+
+0000009e <SetBit>:
+unsigned char SetBit(unsigned char x, unsigned char k, unsigned char b) {
+	return (b ? x | (0x01 << k) : x & ~(0x01 << k));
+}
+unsigned char GetBit(unsigned char x, unsigned char k) {
+	return ((x & (0x01 << k)) != 0);
+}
+  9e:	cf 93       	push	r28
+  a0:	df 93       	push	r29
+  a2:	00 d0       	rcall	.+0      	; 0xa4 <SetBit+0x6>
+  a4:	1f 92       	push	r1
+  a6:	cd b7       	in	r28, 0x3d	; 61
+  a8:	de b7       	in	r29, 0x3e	; 62
+  aa:	89 83       	std	Y+1, r24	; 0x01
+  ac:	6a 83       	std	Y+2, r22	; 0x02
+  ae:	4b 83       	std	Y+3, r20	; 0x03
+  b0:	8b 81       	ldd	r24, Y+3	; 0x03
+  b2:	88 23       	and	r24, r24
+  b4:	71 f0       	breq	.+28     	; 0xd2 <SetBit+0x34>
+  b6:	8a 81       	ldd	r24, Y+2	; 0x02
+  b8:	28 2f       	mov	r18, r24
+  ba:	30 e0       	ldi	r19, 0x00	; 0
+  bc:	81 e0       	ldi	r24, 0x01	; 1
+  be:	90 e0       	ldi	r25, 0x00	; 0
+  c0:	02 c0       	rjmp	.+4      	; 0xc6 <SetBit+0x28>
+  c2:	88 0f       	add	r24, r24
+  c4:	99 1f       	adc	r25, r25
+  c6:	2a 95       	dec	r18
+  c8:	e2 f7       	brpl	.-8      	; 0xc2 <SetBit+0x24>
+  ca:	98 2f       	mov	r25, r24
+  cc:	89 81       	ldd	r24, Y+1	; 0x01
+  ce:	89 2b       	or	r24, r25
+  d0:	0e c0       	rjmp	.+28     	; 0xee <SetBit+0x50>
+  d2:	8a 81       	ldd	r24, Y+2	; 0x02
+  d4:	28 2f       	mov	r18, r24
+  d6:	30 e0       	ldi	r19, 0x00	; 0
+  d8:	81 e0       	ldi	r24, 0x01	; 1
+  da:	90 e0       	ldi	r25, 0x00	; 0
+  dc:	02 c0       	rjmp	.+4      	; 0xe2 <SetBit+0x44>
+  de:	88 0f       	add	r24, r24
+  e0:	99 1f       	adc	r25, r25
+  e2:	2a 95       	dec	r18
+  e4:	e2 f7       	brpl	.-8      	; 0xde <SetBit+0x40>
+  e6:	98 2f       	mov	r25, r24
+  e8:	90 95       	com	r25
+  ea:	89 81       	ldd	r24, Y+1	; 0x01
+  ec:	89 23       	and	r24, r25
+  ee:	0f 90       	pop	r0
+  f0:	0f 90       	pop	r0
+  f2:	0f 90       	pop	r0
+  f4:	df 91       	pop	r29
+  f6:	cf 91       	pop	r28
+  f8:	08 95       	ret
+
+000000fa <main>:
+
+int main(void)
+{
+  fa:	cf 93       	push	r28
+  fc:	df 93       	push	r29
+  fe:	00 d0       	rcall	.+0      	; 0x100 <main+0x6>
+ 100:	cd b7       	in	r28, 0x3d	; 61
+ 102:	de b7       	in	r29, 0x3e	; 62
+	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
+ 104:	81 e2       	ldi	r24, 0x21	; 33
+ 106:	90 e0       	ldi	r25, 0x00	; 0
+ 108:	fc 01       	movw	r30, r24
+ 10a:	10 82       	st	Z, r1
+ 10c:	82 e2       	ldi	r24, 0x22	; 34
+ 10e:	90 e0       	ldi	r25, 0x00	; 0
+ 110:	2f ef       	ldi	r18, 0xFF	; 255
+ 112:	fc 01       	movw	r30, r24
+ 114:	20 83       	st	Z, r18
+	//DDRB = 0x00; PORTB = 0xFF; // Configure port B's 8 pins as inputs
+	DDRC = 0xFF; PORTC = 0x00; // Configure port C's 8 pins as outputs,
+ 116:	87 e2       	ldi	r24, 0x27	; 39
+ 118:	90 e0       	ldi	r25, 0x00	; 0
+ 11a:	2f ef       	ldi	r18, 0xFF	; 255
+ 11c:	fc 01       	movw	r30, r24
+ 11e:	20 83       	st	Z, r18
+ 120:	88 e2       	ldi	r24, 0x28	; 40
+ 122:	90 e0       	ldi	r25, 0x00	; 0
+ 124:	fc 01       	movw	r30, r24
+ 126:	10 82       	st	Z, r1
+	
+	// initialize to 0s
+	unsigned char tmpA = 0x00; // intermediate variable used for port updates
+ 128:	1a 82       	std	Y+2, r1	; 0x02
+	unsigned char tmpC = 0x00;
+ 12a:	19 82       	std	Y+1, r1	; 0x01
+	//unsigned char count = 0x00;
+	
+	while(1)
+	{
+		// 1) Read Inputs and assign to variables
+		tmpA = ~PINA & 0x0F; // Mask PINA to only get the bit you are interested in, first 4 bits
+ 12c:	80 e2       	ldi	r24, 0x20	; 32
+ 12e:	90 e0       	ldi	r25, 0x00	; 0
+ 130:	fc 01       	movw	r30, r24
+ 132:	80 81       	ld	r24, Z
+ 134:	80 95       	com	r24
+ 136:	8f 70       	andi	r24, 0x0F	; 15
+ 138:	8a 83       	std	Y+2, r24	; 0x02
+		tmpC = 0x00;
+ 13a:	19 82       	std	Y+1, r1	; 0x01
+		// 2) Perform Computation
+		
+		if (tmpA <= 4) { //low fuel PC6
+ 13c:	8a 81       	ldd	r24, Y+2	; 0x02
+ 13e:	85 30       	cpi	r24, 0x05	; 5
+ 140:	30 f4       	brcc	.+12     	; 0x14e <main+0x54>
+			tmpC = SetBit(tmpC, 6, 1);
+ 142:	41 e0       	ldi	r20, 0x01	; 1
+ 144:	66 e0       	ldi	r22, 0x06	; 6
+ 146:	89 81       	ldd	r24, Y+1	; 0x01
+ 148:	aa df       	rcall	.-172    	; 0x9e <SetBit>
+ 14a:	89 83       	std	Y+1, r24	; 0x01
+ 14c:	05 c0       	rjmp	.+10     	; 0x158 <main+0x5e>
+		}
+		
+		else {
+			tmpC = SetBit(tmpC, 6, 0); //turn off low fuel light if not less than 4
+ 14e:	40 e0       	ldi	r20, 0x00	; 0
+ 150:	66 e0       	ldi	r22, 0x06	; 6
+ 152:	89 81       	ldd	r24, Y+1	; 0x01
+ 154:	a4 df       	rcall	.-184    	; 0x9e <SetBit>
+ 156:	89 83       	std	Y+1, r24	; 0x01
+		}
+		
+		if (tmpA == 1 || tmpA == 2) {
+ 158:	8a 81       	ldd	r24, Y+2	; 0x02
+ 15a:	81 30       	cpi	r24, 0x01	; 1
+ 15c:	19 f0       	breq	.+6      	; 0x164 <main+0x6a>
+ 15e:	8a 81       	ldd	r24, Y+2	; 0x02
+ 160:	82 30       	cpi	r24, 0x02	; 2
+ 162:	29 f4       	brne	.+10     	; 0x16e <main+0x74>
+			tmpC = SetBit(tmpC, 5, 1); //clear lsb, then set to 1
+ 164:	41 e0       	ldi	r20, 0x01	; 1
+ 166:	65 e0       	ldi	r22, 0x05	; 5
+ 168:	89 81       	ldd	r24, Y+1	; 0x01
+ 16a:	99 df       	rcall	.-206    	; 0x9e <SetBit>
+ 16c:	89 83       	std	Y+1, r24	; 0x01
+			//tmpC = 0x20;
+		}
+		
+		if (tmpA == 3 || tmpA == 4) {
+ 16e:	8a 81       	ldd	r24, Y+2	; 0x02
+ 170:	83 30       	cpi	r24, 0x03	; 3
+ 172:	19 f0       	breq	.+6      	; 0x17a <main+0x80>
+ 174:	8a 81       	ldd	r24, Y+2	; 0x02
+ 176:	84 30       	cpi	r24, 0x04	; 4
+ 178:	11 f4       	brne	.+4      	; 0x17e <main+0x84>
+			//tmpC = SetBit(tmpC, 1, 1);
+			tmpC = 0x30;
+ 17a:	80 e3       	ldi	r24, 0x30	; 48
+ 17c:	89 83       	std	Y+1, r24	; 0x01
+		}
+		
+		if (tmpA == 5 || tmpA == 6) {
+ 17e:	8a 81       	ldd	r24, Y+2	; 0x02
+ 180:	85 30       	cpi	r24, 0x05	; 5
+ 182:	19 f0       	breq	.+6      	; 0x18a <main+0x90>
+ 184:	8a 81       	ldd	r24, Y+2	; 0x02
+ 186:	86 30       	cpi	r24, 0x06	; 6
+ 188:	11 f4       	brne	.+4      	; 0x18e <main+0x94>
+			tmpC = 0x38;
+ 18a:	88 e3       	ldi	r24, 0x38	; 56
+ 18c:	89 83       	std	Y+1, r24	; 0x01
+		}
+		
+		if (tmpA == 7 || tmpA == 8 || tmpA == 9) {
+ 18e:	8a 81       	ldd	r24, Y+2	; 0x02
+ 190:	87 30       	cpi	r24, 0x07	; 7
+ 192:	31 f0       	breq	.+12     	; 0x1a0 <main+0xa6>
+ 194:	8a 81       	ldd	r24, Y+2	; 0x02
+ 196:	88 30       	cpi	r24, 0x08	; 8
+ 198:	19 f0       	breq	.+6      	; 0x1a0 <main+0xa6>
+ 19a:	8a 81       	ldd	r24, Y+2	; 0x02
+ 19c:	89 30       	cpi	r24, 0x09	; 9
+ 19e:	11 f4       	brne	.+4      	; 0x1a4 <main+0xaa>
+			tmpC = 0x3C;
+ 1a0:	8c e3       	ldi	r24, 0x3C	; 60
+ 1a2:	89 83       	std	Y+1, r24	; 0x01
+		}
+		
+		if (tmpA == 10 || tmpA == 11 || tmpA == 12) {
+ 1a4:	8a 81       	ldd	r24, Y+2	; 0x02
+ 1a6:	8a 30       	cpi	r24, 0x0A	; 10
+ 1a8:	31 f0       	breq	.+12     	; 0x1b6 <main+0xbc>
+ 1aa:	8a 81       	ldd	r24, Y+2	; 0x02
+ 1ac:	8b 30       	cpi	r24, 0x0B	; 11
+ 1ae:	19 f0       	breq	.+6      	; 0x1b6 <main+0xbc>
+ 1b0:	8a 81       	ldd	r24, Y+2	; 0x02
+ 1b2:	8c 30       	cpi	r24, 0x0C	; 12
+ 1b4:	11 f4       	brne	.+4      	; 0x1ba <main+0xc0>
+			tmpC = 0x3E;
+ 1b6:	8e e3       	ldi	r24, 0x3E	; 62
+ 1b8:	89 83       	std	Y+1, r24	; 0x01
+		}
+		
+		if (tmpA == 13 || tmpA == 14 || tmpA == 15) {
+ 1ba:	8a 81       	ldd	r24, Y+2	; 0x02
+ 1bc:	8d 30       	cpi	r24, 0x0D	; 13
+ 1be:	31 f0       	breq	.+12     	; 0x1cc <main+0xd2>
+ 1c0:	8a 81       	ldd	r24, Y+2	; 0x02
+ 1c2:	8e 30       	cpi	r24, 0x0E	; 14
+ 1c4:	19 f0       	breq	.+6      	; 0x1cc <main+0xd2>
+ 1c6:	8a 81       	ldd	r24, Y+2	; 0x02
+ 1c8:	8f 30       	cpi	r24, 0x0F	; 15
+ 1ca:	11 f4       	brne	.+4      	; 0x1d0 <main+0xd6>
+			tmpC = 0x3F;
+ 1cc:	8f e3       	ldi	r24, 0x3F	; 63
+ 1ce:	89 83       	std	Y+1, r24	; 0x01
+		}
+		
+		PORTC = tmpC;
+ 1d0:	88 e2       	ldi	r24, 0x28	; 40
+ 1d2:	90 e0       	ldi	r25, 0x00	; 0
+ 1d4:	29 81       	ldd	r18, Y+1	; 0x01
+ 1d6:	fc 01       	movw	r30, r24
+ 1d8:	20 83       	st	Z, r18
+
+		// 3) write results to port
+		//PORTC = count; //result of 1's in A & B
+	}
+ 1da:	a8 cf       	rjmp	.-176    	; 0x12c <main+0x32>
+
+000001dc <_exit>:
+ 1dc:	f8 94       	cli
+
+000001de <__stop_program>:
+ 1de:	ff cf       	rjmp	.-2      	; 0x1de <__stop_program>
