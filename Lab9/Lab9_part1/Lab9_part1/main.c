@@ -1,8 +1,8 @@
 /*
  * Lab9_part1.c
  *
- * Created: 8/16/2018 1:11:11 PM
- * Author : ucrcse
+ * Created: 8/19/2018 10:11:36 PM
+ * Author : Keilani
  */ 
 
 #include <avr/io.h>
@@ -52,98 +52,121 @@ typedef double db;
 
 enum Speaker_States{SP_SMSTART, INIT, C4_FREQ, D4_FREQ, E4_FREQ} sp_state;
 void Speaker_Tick(){
-		db C4 = 261.63; // f = 261.63
-		db D4 = 293.66; // f = 293.66
-		db E4 = 329.63; // f = 329.63
-		unsigned char button0; // A0
-		unsigned char button1; // A1
-		unsigned char button2; // A2
-		button0 = PINA & 0x01; // A0
-		button1 = PINA & 0x02; // A1
-		button2 = PINA & 0x04; // A2
+	db C4 = 261.63; // f = 261.63
+	db D4 = 293.66; // f = 293.66
+	db E4 = 329.63; // f = 329.63
+	unsigned char button0; // A0
+	unsigned char button1; // A1
+	unsigned char button2; // A2
+	button0 = PINA & 0x01; // A0
+	button1 = PINA & 0x02; // A1
+	button2 = PINA & 0x04; // A2
 
-		uc button_check0;
-		uc button_check1;
-		uc button_check2;
+	uc button_check0=0;
+	uc button_check1=0;
+	uc button_check2=0;
 
-			if ( (button0&&!button1&&!button2))
+	if ( (button0&&!button1&&!button2))
+	{
+		button_check0 = 1;
+	}
+
+	if ( (!button0&&button1&&!button2))
+	{
+		button_check1 = 1;
+	}
+
+	if ( (!button0&&!button1&&button2))
+	{
+		button_check2 = 1;
+	}
+	
+	switch(sp_state){
+		case SP_SMSTART:
+		sp_state = INIT;
+		break;
+		case INIT:
+			if (button_check0)
 			{
-				button_check0 = 1;
+				sp_state = C4_FREQ;
+				break;
 			}
-
-			if ( (!button0&&button1&&!button2))
+			if (button_check1)
 			{
-				button_check1 = 1;
+				sp_state = D4_FREQ;
+				break;
 			}
-
-			if ( (!button0&&!button1&&button2))
+			if (button_check2)
 			{
-				button_check2 = 1;
+				sp_state = E4_FREQ;
+				break;
 			}
-			
-		switch(sp_state){
-			case SP_SMSTART: 
-				sp_state = INIT;
-				break;
-			case INIT:
-				if ()
-				{
-				}
-				sp_state = (button_check0) ? C4_FREQ: INIT;
-				sp_state = (button_check1) ? D4_FREQ: INIT;
-				sp_state = (button_check2) ?  E4_FREQ: INIT;
-				break;
-			case C4_FREQ:
-				sp_state = (button_check0) ? C4_FREQ: INIT;
-				break;
-			case  D4_FREQ: 
-				sp_state = (button_check1) ? D4_FREQ: INIT;
-				break;
-			case  E4_FREQ:
-				sp_state = (button_check2) ?  E4_FREQ: INIT;
-				break;
-			default:
+			sp_state = INIT;
 			break;
-		}
 		
-		switch(sp_state){
-			//State Actions
-			case SP_SMSTART:
+		case C4_FREQ:
+			if (button_check0)
+			{
+				sp_state = C4_FREQ;
+				break;
+			}
+			else {sp_state = INIT;}
+		break;
+		case  D4_FREQ:
+			if (button_check0)
+			{
+				sp_state = D4_FREQ;
+				break;
+			}
+			else {sp_state = INIT;}
 			break;
-			case INIT:
-			break;
-			case C4_FREQ:
-				set_PWM(C4);
-				PWM_on();
-			break;
-			case  D4_FREQ:
-				set_PWM(D4);
-				PWM_on();
-			break;
-			case  E4_FREQ:
-				set_PWM(E4);
-				PWM_on();
-			break;
-			default:
-			break;
-		}
+		case  E4_FREQ:
+			if (button_check0)
+			{
+				sp_state = E4_FREQ;
+				break;
+			}
+			else {sp_state = INIT;}
+		break;
+		default:
+		break;
+	}
+	
+	switch(sp_state){
+		//State Actions
+		case SP_SMSTART:
+		break;
+		case INIT:
+			set_PWM(0);
+			PWM_on();
+		break;
+		case C4_FREQ:
+			set_PWM(C4);
+			PWM_on();
+		break;
+			PWM_on();
+		break;
+		case  E4_FREQ:
+			set_PWM(E4);
+			PWM_on();
+		break;
+		default:
+		break;
+	}
 
 	
-	};
+};
 int main(void)
 {
-		DDRB = 0xFF; //set port B to output
-		PORTB = 0x00; //init port B to 0's
-		DDRA = 0x00;
-		PORTA = 0xFF; // Configure port A's 8 pins as inputs
-
-    /* Replace with your application code */
-    while (1) 
-    {
+	DDRB = 0xFF; //set port B to output
+	PORTB = 0x00; //init port B to 0's
+	DDRA = 0x00;
+	PORTA = 0xFF; // Configure port A's 8 pins as inputs
 		sp_state = SP_SMSTART;
+
+	/* Replace with your application code */
+	while (1)
+	{
 		Speaker_Tick();
 	}
 }
-
-
-
