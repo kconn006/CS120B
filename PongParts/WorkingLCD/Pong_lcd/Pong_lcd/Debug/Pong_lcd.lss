@@ -19,15 +19,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   7 .debug_abbrev 0000091a  00000000  00000000  00001a05  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000ab0  00000000  00000000  0000231f  2**0
+  8 .debug_line   00000ab2  00000000  00000000  0000231f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000003cc  00000000  00000000  00002dd0  2**2
+  9 .debug_frame  000003cc  00000000  00000000  00002dd4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000006e8  00000000  00000000  0000319c  2**0
+ 10 .debug_str    000006e7  00000000  00000000  000031a0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000818  00000000  00000000  00003884  2**0
+ 11 .debug_loc    00000818  00000000  00000000  00003887  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000000e0  00000000  00000000  0000409c  2**0
+ 12 .debug_ranges 000000e0  00000000  00000000  0000409f  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -367,13 +367,13 @@ Disassembly of section .text:
  2b0:	cd b7       	in	r28, 0x3d	; 61
  2b2:	de b7       	in	r29, 0x3e	; 62
  2b4:	89 83       	std	Y+1, r24	; 0x01
- 2b6:	88 e2       	ldi	r24, 0x28	; 40
+ 2b6:	82 e2       	ldi	r24, 0x22	; 34
  2b8:	90 e0       	ldi	r25, 0x00	; 0
- 2ba:	28 e2       	ldi	r18, 0x28	; 40
+ 2ba:	22 e2       	ldi	r18, 0x22	; 34
  2bc:	30 e0       	ldi	r19, 0x00	; 0
  2be:	f9 01       	movw	r30, r18
  2c0:	20 81       	ld	r18, Z
- 2c2:	2f 77       	andi	r18, 0x7F	; 127
+ 2c2:	2e 7f       	andi	r18, 0xFE	; 254
  2c4:	fc 01       	movw	r30, r24
  2c6:	20 83       	st	Z, r18
  2c8:	8b e2       	ldi	r24, 0x2B	; 43
@@ -381,23 +381,23 @@ Disassembly of section .text:
  2cc:	29 81       	ldd	r18, Y+1	; 0x01
  2ce:	fc 01       	movw	r30, r24
  2d0:	20 83       	st	Z, r18
- 2d2:	88 e2       	ldi	r24, 0x28	; 40
+ 2d2:	82 e2       	ldi	r24, 0x22	; 34
  2d4:	90 e0       	ldi	r25, 0x00	; 0
- 2d6:	28 e2       	ldi	r18, 0x28	; 40
+ 2d6:	22 e2       	ldi	r18, 0x22	; 34
  2d8:	30 e0       	ldi	r19, 0x00	; 0
  2da:	f9 01       	movw	r30, r18
  2dc:	20 81       	ld	r18, Z
- 2de:	20 64       	ori	r18, 0x40	; 64
+ 2de:	22 60       	ori	r18, 0x02	; 2
  2e0:	fc 01       	movw	r30, r24
  2e2:	20 83       	st	Z, r18
  2e4:	00 00       	nop
- 2e6:	88 e2       	ldi	r24, 0x28	; 40
+ 2e6:	82 e2       	ldi	r24, 0x22	; 34
  2e8:	90 e0       	ldi	r25, 0x00	; 0
- 2ea:	28 e2       	ldi	r18, 0x28	; 40
+ 2ea:	22 e2       	ldi	r18, 0x22	; 34
  2ec:	30 e0       	ldi	r19, 0x00	; 0
  2ee:	f9 01       	movw	r30, r18
  2f0:	20 81       	ld	r18, Z
- 2f2:	2f 7b       	andi	r18, 0xBF	; 191
+ 2f2:	2d 7f       	andi	r18, 0xFD	; 253
  2f4:	fc 01       	movw	r30, r24
  2f6:	20 83       	st	Z, r18
  2f8:	82 e0       	ldi	r24, 0x02	; 2
@@ -416,13 +416,13 @@ Disassembly of section .text:
  30e:	cd b7       	in	r28, 0x3d	; 61
  310:	de b7       	in	r29, 0x3e	; 62
  312:	89 83       	std	Y+1, r24	; 0x01
- 314:	88 e2       	ldi	r24, 0x28	; 40
+ 314:	82 e2       	ldi	r24, 0x22	; 34
  316:	90 e0       	ldi	r25, 0x00	; 0
- 318:	28 e2       	ldi	r18, 0x28	; 40
+ 318:	22 e2       	ldi	r18, 0x22	; 34
  31a:	30 e0       	ldi	r19, 0x00	; 0
  31c:	f9 01       	movw	r30, r18
  31e:	20 81       	ld	r18, Z
- 320:	20 68       	ori	r18, 0x80	; 128
+ 320:	21 60       	ori	r18, 0x01	; 1
  322:	fc 01       	movw	r30, r24
  324:	20 83       	st	Z, r18
  326:	8b e2       	ldi	r24, 0x2B	; 43
@@ -430,23 +430,23 @@ Disassembly of section .text:
  32a:	29 81       	ldd	r18, Y+1	; 0x01
  32c:	fc 01       	movw	r30, r24
  32e:	20 83       	st	Z, r18
- 330:	88 e2       	ldi	r24, 0x28	; 40
+ 330:	82 e2       	ldi	r24, 0x22	; 34
  332:	90 e0       	ldi	r25, 0x00	; 0
- 334:	28 e2       	ldi	r18, 0x28	; 40
+ 334:	22 e2       	ldi	r18, 0x22	; 34
  336:	30 e0       	ldi	r19, 0x00	; 0
  338:	f9 01       	movw	r30, r18
  33a:	20 81       	ld	r18, Z
- 33c:	20 64       	ori	r18, 0x40	; 64
+ 33c:	22 60       	ori	r18, 0x02	; 2
  33e:	fc 01       	movw	r30, r24
  340:	20 83       	st	Z, r18
  342:	00 00       	nop
- 344:	88 e2       	ldi	r24, 0x28	; 40
+ 344:	82 e2       	ldi	r24, 0x22	; 34
  346:	90 e0       	ldi	r25, 0x00	; 0
- 348:	28 e2       	ldi	r18, 0x28	; 40
+ 348:	22 e2       	ldi	r18, 0x22	; 34
  34a:	30 e0       	ldi	r19, 0x00	; 0
  34c:	f9 01       	movw	r30, r18
  34e:	20 81       	ld	r18, Z
- 350:	2f 7b       	andi	r18, 0xBF	; 191
+ 350:	2d 7f       	andi	r18, 0xFD	; 253
  352:	fc 01       	movw	r30, r24
  354:	20 83       	st	Z, r18
  356:	81 e0       	ldi	r24, 0x01	; 1

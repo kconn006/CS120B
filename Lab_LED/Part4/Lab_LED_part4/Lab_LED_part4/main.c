@@ -8,6 +8,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <math.h>
+#include "matrix.h"
 typedef unsigned char uc; 
 volatile unsigned char TimerFlag = 0;
 unsigned long _avr_timer_M = 1;
@@ -109,7 +110,7 @@ void MoveBall_Tick(){
 	  A5 0 |  |  |  |  |  |  |  |  |  |  |
 	  A6 0 |  |  |  |  |  |  |  |  |  |  |
 	  A7 0 |  |  |  |  |  |  |  |  |  |  |
-  			0  0  0  0  0  0  0  0  0  0
+  			0  1  1  1  1  1  1  1  1  0
 		   // B0  B1  B2  B3  B4  B5  B6  B7 
 	//Start with ball in Left Top corner
 		// === Local Variables ===
@@ -197,14 +198,215 @@ void MoveBall_Tick(){
 		 
 }*/
 
+
+//Basic try
+enum Try_States {try_display, try_move_up, try_release, try_move_down,try_stay};
+int Try_Tick(int try_state) {
+
+	// === Local Variables ===
+	static unsigned char try_turn_on = 0x38; // sets the pattern displayed on columns
+	static unsigned char try_column_num = 0x7F; // grounds column to display pattern
+	uc button = ~PINC &0x02;
+	uc button2 = ~PINC & 0x04;
+	uc top = 0x07;
+	uc bottom = 0xE0;
+	//uc max_turn_on =
+	// === Transitions ===
+	switch (try_state) {
+		case try_display: 
+			if (button)
+			{
+				try_state = try_move_up;
+			}
+			else if (button2)
+			{
+				try_state = try_move_down;
+			}
+			else {try_state = try_display;}
+		break;
+		case try_move_up:
+			if (!button)
+			{try_state = try_stay;}
+			
+			if (button)
+			{try_state = try_move_up;}
+		break;
+		case try_move_down:
+			if (!button2)
+			{
+				try_state = try_stay;
+			}
+		break;
+		case try_stay:
+			try_state = try_stay;
+			break;
+		break;
+		default:   	        
+		try_state = try_stay;
+		break;
+	}
+	
+	// === Actions ===
+	switch (try_state) {
+		case try_display:   // illuminate LED in First col
+			try_turn_on = try_turn_on; // display far left column
+			try_column_num = try_column_num; // pattern illuminates top row
+		break;
+		case try_move_up: 
+		if (try_turn_on > top){
+			try_turn_on = (try_turn_on >> 1); }
+			
+			try_turn_on = try_turn_on;
+			try_column_num = try_column_num;
+			break;
+		case try_move_down:
+		if (try_turn_on < bottom){
+			try_turn_on = (try_turn_on << 1);}
+			
+			try_turn_on =try_turn_on;
+			try_column_num = try_column_num;
+		break;
+		case try_stay:
+			try_turn_on = try_turn_on;
+			try_column_num = try_column_num;
+			break;
+		// else if far right column was last to display (grounded)
+		//else if (column_sel == 0xFE) {
+			//column_sel = 0x7F; // resets display column to far left column
+			//column_val = column_val << 1; // shift down illuminated LED one row
+		//}
+		// else Shift displayed column one to the right
+		//else {
+		//	column_sel = (column_sel >> 1) | 0x80;
+		//}
+		
+		default: 
+		break;
+	}
+	matrix_display(try_turn_on,try_column_num);
+	//PORTA = try_turn_on; // PORTA displays column pattern
+	//PORTB = try_column_num; // PORTB selects column to display pattern
+
+	return try_state;
+}
+//Advanced
+/*enum Try_States {try_display, try_press, try_release,try_move_up, try_move_down,try_stay,try_reset};
+int Try_Tick(int try_state) {
+
+	// === Local Variables ===
+	static unsigned char try_turn_on = 0x01; // sets the pattern displayed on columns
+	static unsigned char try_column_num = 0x7E; // grounds column to display pattern
+	uc button = ~PINC &0x02;
+	uc button2 = ~PINC & 0x04;
+	uc reset = ~PINC &0x01;
+	uc top = 0x07;
+	uc bottom =0xE0;
+	//uc max_turn_on =
+	// === Transitions ===
+	switch (try_state) {
+		case try_display:
+		if ( button&&!button2)
+		{
+			try_state = try_move_up;
+		}
+		else if (!button&& button2)
+		{
+			try_state = try_move_down;
+		}
+		else if (!button&&!button2) {try_state = try_display;}
+		break;
+		case try_move_up:
+		if (reset)
+		{try_state = try_reset;}
+		else{try_state = try_stay;}
+		break;
+		case try_move_down:
+		if (reset)
+		{try_state = try_reset;}
+		else{try_state = try_stay;}
+		break;
+		case try_stay:
+		if (!button&&!button2)
+		{try_state = try_press;
+		}
+		else if ( reset)
+		{try_state = try_reset;
+		}
+		else{try_state=try_stay;}
+		break;
+		case try_press:
+		if ( button&&!button2)
+		{try_state =try_move_up;}
+		
+		else if (!button && button2)
+		{try_state =try_move_down;}
+		
+		else if (reset)
+		{try_state = try_reset;}
+		
+		else{try_state=try_press;}
+		break;
+		case try_reset:
+		try_state=try_display;
+		default:
+		//try_state = try_display;
+		break;
+	}
+	
+	// === Actions ===
+	switch (try_state) {
+		case try_display:   // illuminate LED in First col
+		try_turn_on = 0x38; // display far left column
+		try_column_num = 0x7E; // pattern illuminates top row
+		break;
+		case try_move_up:
+		if (try_turn_on < 0x07)
+		{//Bounds Check
+			try_turn_on = (try_turn_on >> 1);
+		}
+		
+		try_turn_on = try_turn_on;
+		try_column_num = try_column_num;
+		break;
+		case try_move_down:
+		if (try_turn_on < bottom)
+		{//Bounds Check
+			try_turn_on = (try_turn_on << 1);
+		}
+		try_turn_on = try_turn_on;
+		try_column_num = try_column_num;
+		break;
+		case try_stay:
+		try_turn_on = try_turn_on;
+		try_column_num = try_column_num;
+		break;
+		// else if far right column was last to display (grounded)
+		//else if (column_sel == 0xFE) {
+		//column_sel = 0x7F; // resets display column to far left column
+		//column_val = column_val << 1; // shift down illuminated LED one row
+		//}
+		// else Shift displayed column one to the right
+		//else {
+		//	column_sel = (column_sel >> 1) | 0x80;
+		//}
+		
+		default:
+		break;
+	}
+	
+	PORTA = try_turn_on; // PORTA displays column pattern
+	PORTB = try_column_num; // PORTB selects column to display pattern
+
+	return try_state;
+};*/
 enum MakeSquare_States{MS_START, MS_SIDES, MS_TOPandBOT} ms_state;
 void MakeSquare_Tick(){
 	//Table Below of Matrix to make it easier to 
 	//visualize the possible output
 	/*A0 0 |  |  |  |  |  |  |  |  |
 	  A1 0 |  |  |  |  |  |  |  |  |
-	  A2 1 |  |  | @| @| @| @|  |  |
-	  A3 1 |  |  | @|  |  | @|  |  |
+	  A2 0 |  |  |  |  |  |  |  |  |
+	  A3 1 |  |  | @| @| @| @|  |  |
 	  A4 1 |  |  | @|  |  | @|  |  |
 	  A5 1 |  |  | @| @| @| @|  |  |
 	  A6 0 |  |  |  |  |  |  |  |  |
@@ -270,7 +472,7 @@ int main(void)
 	PORTC = 0xFF; //init port C to 1's
 	
 	
-	const unsigned long timerPeriod =1;
+	const unsigned long timerPeriod =100;
 
 	TimerSet(timerPeriod);
 	TimerOn();	
@@ -279,7 +481,8 @@ int main(void)
 	while (1)
 	{
 		//SM1_Tick(sm1_display);
-		MakeSquare_Tick();
+		//MakeSquare_Tick();
+		Try_Tick(try_display);
 		while(!TimerFlag); //wait 1 sec
 		TimerFlag = 0;
 	}

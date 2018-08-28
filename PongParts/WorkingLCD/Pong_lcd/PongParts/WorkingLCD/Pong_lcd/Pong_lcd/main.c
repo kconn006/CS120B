@@ -11,6 +11,7 @@
 #include "queue.h"
 #include "player1_paddle.h"
 #include "player2_paddle.h"
+#include "matrix.h"
 typedef unsigned char uc;
 
 /*Assumptions: User will wait at least 4s for menu string to display. 
@@ -18,7 +19,7 @@ Then user will wait 7s for player_str to display
 */
 
 
-uc m_string[] = {' ', ' ', ' ','A', 'r', 'e', ' ', 'y', 'o', 'u',  ' ',  'r', 'e', 'a', 'd', 'y', ' ', 't', 'o',  ' ',  'p', 'l', 'a', 'y',  ' ',  'P', 'O', 'N', 'G', ' ?', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+uc m_string[] = {' ', ' ', ' ','A', 'r', 'e', ' ', 'y', 'o', 'u',  ' ',  'r', 'e', 'a', 'd', 'y', ' ', 't', 'o',  ' ',  'p', 'l', 'a', 'y',  ' ',  'P', 'O', 'N', 'G', '?', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 uc m_cnt = 1;
 enum menu_str_States{m_init} m_state;
 int menu_str_tick(int m_state) {
@@ -196,7 +197,7 @@ void Player1_tick(){
 	switch(p1_state)
 	{//State Transitions 
 		case P1_START:
-			if (ready)
+			if (ready==1)
 			{
 				p1_state = P1_SHOW_PADDLE;
 				break;
@@ -219,7 +220,8 @@ void Player1_tick(){
 		case P1_SHOW_PADDLE:
 			//Working on logic to call tick function to display paddle 1	
 			//LCD_DisplayString(1, "P1:");		
-			p1_paddle_Tick();			
+			///p1_paddle_Tick();	
+			Try_Tick(try_display);		
 			//Will display 3 light paddle on left side of screen
 			break;
 	}

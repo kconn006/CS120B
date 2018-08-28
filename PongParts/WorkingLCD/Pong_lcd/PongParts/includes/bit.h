@@ -6,7 +6,7 @@
 
 #ifndef BIT_H
 #define BIT_H
-
+typedef unsigned char uc;
 ////////////////////////////////////////////////////////////////////////////////
 //Functionality - Sets bit on a PORTx
 //Parameter: Takes in a uChar for a PORTx, the pin number and the binary value 
