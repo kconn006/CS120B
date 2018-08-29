@@ -128,7 +128,7 @@ void question_mark_tick(){
 }
 	
 enum Menu_States{MENU_MAIN, MENU_Press, MENU_PLAYERS, MENU_READY } menu_state;
-void menu_tick() {
+void Menu_tick() {
 	uc start_button = ~PINC & 0x01; //Start = C0
 	uc set_ready1 = 0;
 	switch(menu_state) 
@@ -221,7 +221,7 @@ void Player1_tick(){
 			//Working on logic to call tick function to display paddle 1	
 			//LCD_DisplayString(1, "P1:");		
 			///p1_paddle_Tick();	
-			Try_Tick(try_display);		
+			p1_paddle_Tick(P1_START);		
 			//Will display 3 light paddle on left side of screen
 			break;
 	}
@@ -235,22 +235,47 @@ int main(void)
 	DDRA = 0xFF; PORTA = 0x00; //outputs
 	DDRD = 0xFF; PORTD = 0x00;
 	
+	
+	//Period for the tasks
+	unsigned long int Menu_calc = 200;
+	unsigned long int Player1_calc = 200;
+	unsigned long int LCD_calc = 20;
+	
+	
 	//Greatest common divisor for all tasks or smallest time unit for tasks.
-	unsigned long int GCD = 15;
+	unsigned long int tempGCD = 1;
+	tempGCD = findGCD(Menu_calc, Player1_calc);
+	//tempGCD = findGCD(tempGCD, LCD_calc);
+	
+	//Greatest common divisor for all tasks or smallest time unit for tasks.
+	unsigned long int GCD = tempGCD;
 
 	//Recalculate GCD periods for scheduler
-	unsigned long int lcd_period = 15;
+	unsigned long int Menu_period = Menu_calc/GCD;
+	unsigned long int Player1_period = Player1_calc/GCD;
+	unsigned long int LCD_period = LCD_calc/GCD;
+
 	
 	//Declare an array of tasks
-	static task task1;
-	task *tasks[] = { &task1 };
+	static task task1, task2/*, task3*/;
+	task *tasks[] = { &task1, &task2, /*&task3*/ };
 	const unsigned short numTasks = sizeof(tasks) / sizeof(task*);
 	
 	//task1
 	task1.state = 0;//Task initial state.
-	task1.period = lcd_period;//Task Period.
-	task1.elapsedTime = lcd_period;//Task current elapsed time.
-	task1.TickFct = &menu_tick;//Function pointer for the tick.
+	task1.period = Menu_period;//Task Period.
+	task1.elapsedTime = Menu_period;//Task current elapsed time.
+	task1.TickFct = &Menu_tick;//Function pointer for the tick.
+	// Task 2
+	task2.state = 0;//Task initial state.
+	task2.period = Player1_period;//Task Period.
+	task2.elapsedTime = Player1_period;//Task current elapsed time.
+	task2.TickFct = &Player1_tick;//Function pointer for the tick.
+	/*// Task 3
+	task2.state = 0;//Task initial state.
+	task2.period = LCD_period;//Task Period.
+	task2.elapsedTime = LCD_period;//Task current elapsed time.
+	task2.TickFct = &LCD;//Function pointer for the tick.*/
 	
 	// Set the timer and turn it on
 	TimerSet(GCD);
