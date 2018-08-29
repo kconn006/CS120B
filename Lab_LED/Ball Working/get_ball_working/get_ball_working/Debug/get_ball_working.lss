@@ -1,0 +1,455 @@
+
+get_ball_working.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000006  00800100  00000286  0000031a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000286  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000008  00800106  00800106  00000320  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000320  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000350  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000000d0  00000000  00000000  00000390  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   0000102e  00000000  00000000  00000460  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000a25  00000000  00000000  0000148e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000008db  00000000  00000000  00001eb3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000001cc  00000000  00000000  00002790  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000069b  00000000  00000000  0000295c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000006fc  00000000  00000000  00002ff7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000c0  00000000  00000000  000036f3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	45 c0       	rjmp	.+138    	; 0x8c <__ctors_end>
+   2:	00 00       	nop
+   4:	60 c0       	rjmp	.+192    	; 0xc6 <__bad_interrupt>
+   6:	00 00       	nop
+   8:	5e c0       	rjmp	.+188    	; 0xc6 <__bad_interrupt>
+   a:	00 00       	nop
+   c:	5c c0       	rjmp	.+184    	; 0xc6 <__bad_interrupt>
+   e:	00 00       	nop
+  10:	5a c0       	rjmp	.+180    	; 0xc6 <__bad_interrupt>
+  12:	00 00       	nop
+  14:	58 c0       	rjmp	.+176    	; 0xc6 <__bad_interrupt>
+  16:	00 00       	nop
+  18:	56 c0       	rjmp	.+172    	; 0xc6 <__bad_interrupt>
+  1a:	00 00       	nop
+  1c:	54 c0       	rjmp	.+168    	; 0xc6 <__bad_interrupt>
+  1e:	00 00       	nop
+  20:	52 c0       	rjmp	.+164    	; 0xc6 <__bad_interrupt>
+  22:	00 00       	nop
+  24:	50 c0       	rjmp	.+160    	; 0xc6 <__bad_interrupt>
+  26:	00 00       	nop
+  28:	4e c0       	rjmp	.+156    	; 0xc6 <__bad_interrupt>
+  2a:	00 00       	nop
+  2c:	4c c0       	rjmp	.+152    	; 0xc6 <__bad_interrupt>
+  2e:	00 00       	nop
+  30:	4a c0       	rjmp	.+148    	; 0xc6 <__bad_interrupt>
+  32:	00 00       	nop
+  34:	7e c0       	rjmp	.+252    	; 0x132 <__vector_13>
+  36:	00 00       	nop
+  38:	46 c0       	rjmp	.+140    	; 0xc6 <__bad_interrupt>
+  3a:	00 00       	nop
+  3c:	44 c0       	rjmp	.+136    	; 0xc6 <__bad_interrupt>
+  3e:	00 00       	nop
+  40:	42 c0       	rjmp	.+132    	; 0xc6 <__bad_interrupt>
+  42:	00 00       	nop
+  44:	40 c0       	rjmp	.+128    	; 0xc6 <__bad_interrupt>
+  46:	00 00       	nop
+  48:	3e c0       	rjmp	.+124    	; 0xc6 <__bad_interrupt>
+  4a:	00 00       	nop
+  4c:	3c c0       	rjmp	.+120    	; 0xc6 <__bad_interrupt>
+  4e:	00 00       	nop
+  50:	3a c0       	rjmp	.+116    	; 0xc6 <__bad_interrupt>
+  52:	00 00       	nop
+  54:	38 c0       	rjmp	.+112    	; 0xc6 <__bad_interrupt>
+  56:	00 00       	nop
+  58:	36 c0       	rjmp	.+108    	; 0xc6 <__bad_interrupt>
+  5a:	00 00       	nop
+  5c:	34 c0       	rjmp	.+104    	; 0xc6 <__bad_interrupt>
+  5e:	00 00       	nop
+  60:	32 c0       	rjmp	.+100    	; 0xc6 <__bad_interrupt>
+  62:	00 00       	nop
+  64:	30 c0       	rjmp	.+96     	; 0xc6 <__bad_interrupt>
+  66:	00 00       	nop
+  68:	2e c0       	rjmp	.+92     	; 0xc6 <__bad_interrupt>
+  6a:	00 00       	nop
+  6c:	2c c0       	rjmp	.+88     	; 0xc6 <__bad_interrupt>
+  6e:	00 00       	nop
+  70:	2a c0       	rjmp	.+84     	; 0xc6 <__bad_interrupt>
+  72:	00 00       	nop
+  74:	28 c0       	rjmp	.+80     	; 0xc6 <__bad_interrupt>
+  76:	00 00       	nop
+  78:	26 c0       	rjmp	.+76     	; 0xc6 <__bad_interrupt>
+  7a:	00 00       	nop
+  7c:	24 c0       	rjmp	.+72     	; 0xc6 <__bad_interrupt>
+  7e:	00 00       	nop
+  80:	22 c0       	rjmp	.+68     	; 0xc6 <__bad_interrupt>
+  82:	00 00       	nop
+  84:	20 c0       	rjmp	.+64     	; 0xc6 <__bad_interrupt>
+  86:	00 00       	nop
+  88:	1e c0       	rjmp	.+60     	; 0xc6 <__bad_interrupt>
+	...
+
+0000008c <__ctors_end>:
+  8c:	11 24       	eor	r1, r1
+  8e:	1f be       	out	0x3f, r1	; 63
+  90:	cf ef       	ldi	r28, 0xFF	; 255
+  92:	d0 e4       	ldi	r29, 0x40	; 64
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	cd bf       	out	0x3d, r28	; 61
+
+00000098 <__do_copy_data>:
+  98:	11 e0       	ldi	r17, 0x01	; 1
+  9a:	a0 e0       	ldi	r26, 0x00	; 0
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	e6 e8       	ldi	r30, 0x86	; 134
+  a0:	f2 e0       	ldi	r31, 0x02	; 2
+  a2:	00 e0       	ldi	r16, 0x00	; 0
+  a4:	0b bf       	out	0x3b, r16	; 59
+  a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
+  a8:	07 90       	elpm	r0, Z+
+  aa:	0d 92       	st	X+, r0
+  ac:	a6 30       	cpi	r26, 0x06	; 6
+  ae:	b1 07       	cpc	r27, r17
+  b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
+
+000000b2 <__do_clear_bss>:
+  b2:	21 e0       	ldi	r18, 0x01	; 1
+  b4:	a6 e0       	ldi	r26, 0x06	; 6
+  b6:	b1 e0       	ldi	r27, 0x01	; 1
+  b8:	01 c0       	rjmp	.+2      	; 0xbc <.do_clear_bss_start>
+
+000000ba <.do_clear_bss_loop>:
+  ba:	1d 92       	st	X+, r1
+
+000000bc <.do_clear_bss_start>:
+  bc:	ae 30       	cpi	r26, 0x0E	; 14
+  be:	b2 07       	cpc	r27, r18
+  c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
+  c2:	ca d0       	rcall	.+404    	; 0x258 <main>
+  c4:	de c0       	rjmp	.+444    	; 0x282 <_exit>
+
+000000c6 <__bad_interrupt>:
+  c6:	9c cf       	rjmp	.-200    	; 0x0 <__vectors>
+
+000000c8 <TimerSet>:
+			default:
+			break;
+		}
+		
+		PORTA = turn_on;
+		PORTB = column_num;
+  c8:	60 93 01 01 	sts	0x0101, r22	; 0x800101 <_avr_timer_M>
+  cc:	70 93 02 01 	sts	0x0102, r23	; 0x800102 <_avr_timer_M+0x1>
+  d0:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <_avr_timer_M+0x2>
+  d4:	90 93 04 01 	sts	0x0104, r25	; 0x800104 <_avr_timer_M+0x3>
+  d8:	60 93 07 01 	sts	0x0107, r22	; 0x800107 <_avr_timer_cntcurr>
+  dc:	70 93 08 01 	sts	0x0108, r23	; 0x800108 <_avr_timer_cntcurr+0x1>
+  e0:	80 93 09 01 	sts	0x0109, r24	; 0x800109 <_avr_timer_cntcurr+0x2>
+  e4:	90 93 0a 01 	sts	0x010A, r25	; 0x80010a <_avr_timer_cntcurr+0x3>
+  e8:	08 95       	ret
+
+000000ea <TimerOn>:
+  ea:	8b e0       	ldi	r24, 0x0B	; 11
+  ec:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+  f0:	8d e7       	ldi	r24, 0x7D	; 125
+  f2:	90 e0       	ldi	r25, 0x00	; 0
+  f4:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
+  f8:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
+  fc:	82 e0       	ldi	r24, 0x02	; 2
+  fe:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
+ 102:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
+ 106:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+ 10a:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <_avr_timer_M>
+ 10e:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <_avr_timer_M+0x1>
+ 112:	a0 91 03 01 	lds	r26, 0x0103	; 0x800103 <_avr_timer_M+0x2>
+ 116:	b0 91 04 01 	lds	r27, 0x0104	; 0x800104 <_avr_timer_M+0x3>
+ 11a:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <_avr_timer_cntcurr>
+ 11e:	90 93 08 01 	sts	0x0108, r25	; 0x800108 <_avr_timer_cntcurr+0x1>
+ 122:	a0 93 09 01 	sts	0x0109, r26	; 0x800109 <_avr_timer_cntcurr+0x2>
+ 126:	b0 93 0a 01 	sts	0x010A, r27	; 0x80010a <_avr_timer_cntcurr+0x3>
+ 12a:	8f b7       	in	r24, 0x3f	; 63
+ 12c:	80 68       	ori	r24, 0x80	; 128
+ 12e:	8f bf       	out	0x3f, r24	; 63
+ 130:	08 95       	ret
+
+00000132 <__vector_13>:
+ 132:	1f 92       	push	r1
+ 134:	0f 92       	push	r0
+ 136:	0f b6       	in	r0, 0x3f	; 63
+ 138:	0f 92       	push	r0
+ 13a:	11 24       	eor	r1, r1
+ 13c:	8f 93       	push	r24
+ 13e:	9f 93       	push	r25
+ 140:	af 93       	push	r26
+ 142:	bf 93       	push	r27
+ 144:	80 91 07 01 	lds	r24, 0x0107	; 0x800107 <_avr_timer_cntcurr>
+ 148:	90 91 08 01 	lds	r25, 0x0108	; 0x800108 <_avr_timer_cntcurr+0x1>
+ 14c:	a0 91 09 01 	lds	r26, 0x0109	; 0x800109 <_avr_timer_cntcurr+0x2>
+ 150:	b0 91 0a 01 	lds	r27, 0x010A	; 0x80010a <_avr_timer_cntcurr+0x3>
+ 154:	01 97       	sbiw	r24, 0x01	; 1
+ 156:	a1 09       	sbc	r26, r1
+ 158:	b1 09       	sbc	r27, r1
+ 15a:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <_avr_timer_cntcurr>
+ 15e:	90 93 08 01 	sts	0x0108, r25	; 0x800108 <_avr_timer_cntcurr+0x1>
+ 162:	a0 93 09 01 	sts	0x0109, r26	; 0x800109 <_avr_timer_cntcurr+0x2>
+ 166:	b0 93 0a 01 	sts	0x010A, r27	; 0x80010a <_avr_timer_cntcurr+0x3>
+ 16a:	89 2b       	or	r24, r25
+ 16c:	8a 2b       	or	r24, r26
+ 16e:	8b 2b       	or	r24, r27
+ 170:	99 f4       	brne	.+38     	; 0x198 <__vector_13+0x66>
+ 172:	81 e0       	ldi	r24, 0x01	; 1
+ 174:	80 93 0b 01 	sts	0x010B, r24	; 0x80010b <TimerFlag>
+ 178:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <_avr_timer_M>
+ 17c:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <_avr_timer_M+0x1>
+ 180:	a0 91 03 01 	lds	r26, 0x0103	; 0x800103 <_avr_timer_M+0x2>
+ 184:	b0 91 04 01 	lds	r27, 0x0104	; 0x800104 <_avr_timer_M+0x3>
+ 188:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <_avr_timer_cntcurr>
+ 18c:	90 93 08 01 	sts	0x0108, r25	; 0x800108 <_avr_timer_cntcurr+0x1>
+ 190:	a0 93 09 01 	sts	0x0109, r26	; 0x800109 <_avr_timer_cntcurr+0x2>
+ 194:	b0 93 0a 01 	sts	0x010A, r27	; 0x80010a <_avr_timer_cntcurr+0x3>
+ 198:	bf 91       	pop	r27
+ 19a:	af 91       	pop	r26
+ 19c:	9f 91       	pop	r25
+ 19e:	8f 91       	pop	r24
+ 1a0:	0f 90       	pop	r0
+ 1a2:	0f be       	out	0x3f, r0	; 63
+ 1a4:	0f 90       	pop	r0
+ 1a6:	1f 90       	pop	r1
+ 1a8:	18 95       	reti
+
+000001aa <MakeBall_Tick>:
+		// === Local Variables ===
+		static uc bally = 0x00; // sets the pattern displayed on columns PORTA
+		static uc ballx = 0xFF; // grounds column to display pattern PORTB
+		//Remember Columns have to be 0 first in order to turn on
+		//Row value (turn_on) has to 1 to turn on a grounded (0) column
+		uc button = ~PINC &0x01; //C0
+ 1aa:	86 b1       	in	r24, 0x06	; 6
+ 1ac:	81 70       	andi	r24, 0x01	; 1
+		uc button2 = ~PINC &0x01; //C0
+ 1ae:	96 b1       	in	r25, 0x06	; 6
+}
+int main(void)
+{
+	/* Replace with your application code */
+	
+	switch (ball_state)
+ 1b0:	90 91 0c 01 	lds	r25, 0x010C	; 0x80010c <ball_state>
+ 1b4:	91 30       	cpi	r25, 0x01	; 1
+ 1b6:	f1 f0       	breq	.+60     	; 0x1f4 <MakeBall_Tick+0x4a>
+ 1b8:	18 f0       	brcs	.+6      	; 0x1c0 <MakeBall_Tick+0x16>
+ 1ba:	92 30       	cpi	r25, 0x02	; 2
+ 1bc:	59 f0       	breq	.+22     	; 0x1d4 <MakeBall_Tick+0x2a>
+ 1be:	2c c0       	rjmp	.+88     	; 0x218 <MakeBall_Tick+0x6e>
+		{
+			//State Transitions 
+			case ball_display:
+				bally = 0x08;
+ 1c0:	88 e0       	ldi	r24, 0x08	; 8
+ 1c2:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <__data_end>
+				ballx = ~(0x10);
+ 1c6:	8f ee       	ldi	r24, 0xEF	; 239
+ 1c8:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+				//if (button)//Button will start ball to left
+				{ball_state =ball_left;}
+ 1cc:	82 e0       	ldi	r24, 0x02	; 2
+ 1ce:	80 93 0c 01 	sts	0x010C, r24	; 0x80010c <ball_state>
+ 1d2:	28 c0       	rjmp	.+80     	; 0x224 <MakeBall_Tick+0x7a>
+			
+			case ball_left:
+				if (ballx > p1_middle)
+				{ball_state = ball_left;}
+				
+				if(ballx == p1_middle)
+ 1d4:	90 91 00 01 	lds	r25, 0x0100	; 0x800100 <__data_start>
+ 1d8:	9f 37       	cpi	r25, 0x7F	; 127
+ 1da:	c1 f5       	brne	.+112    	; 0x24c <MakeBall_Tick+0xa2>
+				{ball_state=ball_right;}
+ 1dc:	91 e0       	ldi	r25, 0x01	; 1
+ 1de:	90 93 0c 01 	sts	0x010C, r25	; 0x80010c <ball_state>
+					
+				if (button)
+ 1e2:	81 11       	cpse	r24, r1
+ 1e4:	26 c0       	rjmp	.+76     	; 0x232 <MakeBall_Tick+0x88>
+				{bally = 0x08;
+ 1e6:	88 e0       	ldi	r24, 0x08	; 8
+ 1e8:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <__data_end>
+				ballx = ~(0x10);}
+ 1ec:	8f ee       	ldi	r24, 0xEF	; 239
+ 1ee:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+ 1f2:	12 c0       	rjmp	.+36     	; 0x218 <MakeBall_Tick+0x6e>
+			
+			case ball_right:
+				if (ballx < p2_middle)
+				{ball_state = ball_right;}
+
+				if(ballx == p2_middle)
+ 1f4:	90 91 00 01 	lds	r25, 0x0100	; 0x800100 <__data_start>
+ 1f8:	9e 3f       	cpi	r25, 0xFE	; 254
+ 1fa:	59 f5       	brne	.+86     	; 0x252 <MakeBall_Tick+0xa8>
+				{ball_state=ball_left;}
+ 1fc:	92 e0       	ldi	r25, 0x02	; 2
+ 1fe:	90 93 0c 01 	sts	0x010C, r25	; 0x80010c <ball_state>
+						
+				if (button)
+ 202:	81 11       	cpse	r24, r1
+ 204:	0f c0       	rjmp	.+30     	; 0x224 <MakeBall_Tick+0x7a>
+				{bally = 0x08;
+ 206:	88 e0       	ldi	r24, 0x08	; 8
+ 208:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <__data_end>
+				ballx = ~(0x10);
+ 20c:	8f ee       	ldi	r24, 0xEF	; 239
+ 20e:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+				ball_state = ball_display;}
+ 212:	10 92 0c 01 	sts	0x010C, r1	; 0x80010c <ball_state>
+ 216:	13 c0       	rjmp	.+38     	; 0x23e <MakeBall_Tick+0x94>
+
+			default:
+				break;
+		}
+
+		switch (ball_state)
+ 218:	80 91 0c 01 	lds	r24, 0x010C	; 0x80010c <ball_state>
+ 21c:	81 30       	cpi	r24, 0x01	; 1
+ 21e:	49 f0       	breq	.+18     	; 0x232 <MakeBall_Tick+0x88>
+ 220:	82 30       	cpi	r24, 0x02	; 2
+ 222:	69 f4       	brne	.+26     	; 0x23e <MakeBall_Tick+0x94>
+uc MoveXLeft(uc x_comp){
+	//Passes in char for which column to ground
+	//Takes y comp of ball and shifts it to the left 1
+	//Left = towards Player1 paddle.
+	uc leftx = x_comp;
+	leftx = ~leftx; //Invert to find 0
+ 224:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+ 
+			break;
+			case ball_left:
+				//y = PortA
+				//x=PortB
+			{ballx = MoveXLeft(ballx);}
+ 228:	88 0f       	add	r24, r24
+ 22a:	81 60       	ori	r24, 0x01	; 1
+ 22c:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+				ballx = ballx;
+				bally = bally;
+			break;
+ 230:	06 c0       	rjmp	.+12     	; 0x23e <MakeBall_Tick+0x94>
+uc MoveXRight(uc x_comp){
+	//Passes in char for which column to ground
+	//Takes y comp of ball and shifts it to the left 1
+	//Left = towards Player1 paddle.
+	uc rightx = x_comp;
+	rightx = ~rightx; //Invert to find 0
+ 232:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+			case ball_right:
+				//y = PortA
+				//x=PortB
+				{ballx = MoveXRight(ballx);}
+ 236:	86 95       	lsr	r24
+ 238:	80 58       	subi	r24, 0x80	; 128
+ 23a:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+		//Matrix_display( turn_on, column_num)
+		//Matrix_display( PORTA, PORTB);
+		//Matrix_display( y-axis, x-axis)
+
+
+		matrix_display(bally,ballx);
+ 23e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+ 242:	90 91 06 01 	lds	r25, 0x0106	; 0x800106 <__data_end>
+	 // uc turn_on = 0x00;
+	  //uc column_num =0x00; 
+			
+uc matrix_display( uc turn_on, uc column_num){
+	
+	PORTA = turn_on;
+ 246:	92 b9       	out	0x02, r25	; 2
+	PORTB = column_num;
+ 248:	85 b9       	out	0x05, r24	; 5
+}
+ 24a:	08 95       	ret
+				{ball_state = ball_left;}
+				
+				if(ballx == p1_middle)
+				{ball_state=ball_right;}
+					
+				if (button)
+ 24c:	88 23       	and	r24, r24
+ 24e:	59 f2       	breq	.-106    	; 0x1e6 <MakeBall_Tick+0x3c>
+ 250:	e9 cf       	rjmp	.-46     	; 0x224 <MakeBall_Tick+0x7a>
+				{ball_state = ball_right;}
+
+				if(ballx == p2_middle)
+				{ball_state=ball_left;}
+						
+				if (button)
+ 252:	81 11       	cpse	r24, r1
+ 254:	ee cf       	rjmp	.-36     	; 0x232 <MakeBall_Tick+0x88>
+ 256:	d7 cf       	rjmp	.-82     	; 0x206 <MakeBall_Tick+0x5c>
+
+00000258 <main>:
+
+
+		matrix_display(bally,ballx);
+}
+int main (void){
+	DDRA = 0xFF; //set port A to output
+ 258:	8f ef       	ldi	r24, 0xFF	; 255
+ 25a:	81 b9       	out	0x01, r24	; 1
+	PORTA = 0x00; //init port A to 0's
+ 25c:	12 b8       	out	0x02, r1	; 2
+	DDRB = 0xFF; //set port B to output
+ 25e:	84 b9       	out	0x04, r24	; 4
+	PORTB = 0x00; //init port B to 0's
+ 260:	15 b8       	out	0x05, r1	; 5
+	DDRC = 0x00; //set port C to intput
+ 262:	17 b8       	out	0x07, r1	; 7
+	PORTC = 0xFF; //init port C to 1's
+ 264:	88 b9       	out	0x08, r24	; 8
+	
+	
+	const unsigned long timerPeriod =200;
+
+	TimerSet(timerPeriod);
+ 266:	68 ec       	ldi	r22, 0xC8	; 200
+ 268:	70 e0       	ldi	r23, 0x00	; 0
+ 26a:	80 e0       	ldi	r24, 0x00	; 0
+ 26c:	90 e0       	ldi	r25, 0x00	; 0
+ 26e:	2c df       	rcall	.-424    	; 0xc8 <TimerSet>
+	TimerOn();	
+ 270:	3c df       	rcall	.-392    	; 0xea <TimerOn>
+	while (1)
+	{
+		//SM1_Tick(sm1_display);
+		//MakeSquare_Tick();
+		//Try_Tick(try_display);
+		MakeBall_Tick();
+ 272:	9b df       	rcall	.-202    	; 0x1aa <MakeBall_Tick>
+ 274:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <TimerFlag>
+		while(!TimerFlag); //wait 1 sec
+ 278:	88 23       	and	r24, r24
+ 27a:	e1 f3       	breq	.-8      	; 0x274 <main+0x1c>
+ 27c:	10 92 0b 01 	sts	0x010B, r1	; 0x80010b <TimerFlag>
+		TimerFlag = 0;
+ 280:	f8 cf       	rjmp	.-16     	; 0x272 <main+0x1a>
+
+00000282 <_exit>:
+	}
+ 282:	f8 94       	cli
+
+00000284 <__stop_program>:
+ 284:	ff cf       	rjmp	.-2      	; 0x284 <__stop_program>
