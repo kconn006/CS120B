@@ -289,96 +289,76 @@ int Try_Tick(int try_state) {
 
 	return try_state;
 }
-//Advanced
-/*enum Try_States {try_display, try_press, try_release,try_move_up, try_move_down,try_stay,try_reset};
-int Try_Tick(int try_state) {
+//Try 2
+enum Try_States2 {try_display2, try_move_up2, try_release2, try_move_down2,try_stay2};
+int Try_Tick2(int try_state2) {
 
 	// === Local Variables ===
-	static unsigned char try_turn_on = 0x01; // sets the pattern displayed on columns
-	static unsigned char try_column_num = 0x7E; // grounds column to display pattern
-	uc button = ~PINC &0x02;
-	uc button2 = ~PINC & 0x04;
-	uc reset = ~PINC &0x01;
+	static unsigned char try_turn_on2 = 0x38; // sets the pattern displayed on columns
+	static unsigned char try_column_num2 = 0xFE; // grounds column to display pattern
+	uc button = ~PINC &0x08;
+	uc button2 = ~PINC & 0x10;
 	uc top = 0x07;
-	uc bottom =0xE0;
+	uc bottom = 0xE0;
 	//uc max_turn_on =
 	// === Transitions ===
-	switch (try_state) {
-		case try_display:
-		if ( button&&!button2)
+	switch (try_state2) {
+		case try_display2:
+		if (button)
 		{
-			try_state = try_move_up;
+			try_state2 = try_move_up2;
 		}
-		else if (!button&& button2)
+		else if (button2)
 		{
-			try_state = try_move_down;
+			try_state2 = try_move_down2;
 		}
-		else if (!button&&!button2) {try_state = try_display;}
+		else {try_state2 = try_display2;}
 		break;
-		case try_move_up:
-		if (reset)
-		{try_state = try_reset;}
-		else{try_state = try_stay;}
+		case try_move_up2:
+		if (!button)
+		{try_state2 = try_stay2;}
+		
+		if (button)
+		{try_state2 = try_move_up2;}
 		break;
-		case try_move_down:
-		if (reset)
-		{try_state = try_reset;}
-		else{try_state = try_stay;}
-		break;
-		case try_stay:
-		if (!button&&!button2)
-		{try_state = try_press;
+		case try_move_down2:
+		if (!button2)
+		{
+			try_state2 = try_stay2;
 		}
-		else if ( reset)
-		{try_state = try_reset;
-		}
-		else{try_state=try_stay;}
 		break;
-		case try_press:
-		if ( button&&!button2)
-		{try_state =try_move_up;}
-		
-		else if (!button && button2)
-		{try_state =try_move_down;}
-		
-		else if (reset)
-		{try_state = try_reset;}
-		
-		else{try_state=try_press;}
+		case try_stay2:
+		try_state2 = try_stay2;
 		break;
-		case try_reset:
-		try_state=try_display;
+		break;
 		default:
-		//try_state = try_display;
+		try_state2 = try_stay2;
 		break;
 	}
 	
 	// === Actions ===
-	switch (try_state) {
-		case try_display:   // illuminate LED in First col
-		try_turn_on = 0x38; // display far left column
-		try_column_num = 0x7E; // pattern illuminates top row
+	switch (try_state2) {
+		case try_display2:   // illuminate LED in First col
+		try_turn_on2 = try_turn_on2; // display far left column
+		try_column_num2 = try_column_num2; // pattern illuminates top row
 		break;
-		case try_move_up:
-		if (try_turn_on < 0x07)
-		{//Bounds Check
-			try_turn_on = (try_turn_on >> 1);
-		}
+		case try_move_up2:
+		if (try_turn_on2 > top){
+		try_turn_on2 = (try_turn_on2 >> 1); }
 		
-		try_turn_on = try_turn_on;
-		try_column_num = try_column_num;
+		try_turn_on2 = try_turn_on2;
+		try_column_num2 = try_column_num2;
 		break;
-		case try_move_down:
-		if (try_turn_on < bottom)
-		{//Bounds Check
-			try_turn_on = (try_turn_on << 1);
-		}
-		try_turn_on = try_turn_on;
-		try_column_num = try_column_num;
+		case try_move_down2:
+		if (try_turn_on2 < bottom){
+		try_turn_on2 = (try_turn_on2 << 1);}
+		
+		try_turn_on2 =try_turn_on2;
+		try_column_num2 = try_column_num2;
 		break;
-		case try_stay:
-		try_turn_on = try_turn_on;
-		try_column_num = try_column_num;
+		case try_stay2:
+		try_turn_on2 = try_turn_on2;
+		try_column_num2 = try_column_num2;
 		break;
 		// else if far right column was last to display (grounded)
 		//else if (column_sel == 0xFE) {
@@ -393,12 +373,12 @@ int Try_Tick(int try_state) {
 		default:
 		break;
 	}
-	
-	PORTA = try_turn_on; // PORTA displays column pattern
-	PORTB = try_column_num; // PORTB selects column to display pattern
+	matrix_display(try_turn_on2,try_column_num2);
+	//PORTA = try_turn_on; // PORTA displays column pattern
+	//PORTB = try_column_num; // PORTB selects column to display pattern
 
-	return try_state;
-};*/
+	return try_state2;
+}
 enum MakeSquare_States{MS_START, MS_SIDES, MS_TOPandBOT} ms_state;
 void MakeSquare_Tick(){
 	//Table Below of Matrix to make it easier to 
@@ -482,7 +462,8 @@ int main(void)
 	{
 		//SM1_Tick(sm1_display);
 		//MakeSquare_Tick();
-		Try_Tick(try_display);
+		//Try_Tick(try_display);
+		Try_Tick2(try_display2);
 		while(!TimerFlag); //wait 1 sec
 		TimerFlag = 0;
 	}
