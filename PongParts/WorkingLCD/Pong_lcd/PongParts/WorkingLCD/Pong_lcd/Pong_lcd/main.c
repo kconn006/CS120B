@@ -11,6 +11,8 @@
 #include "queue.h"
 #include "player1_paddle.h"
 #include "player2_paddle.h"
+#include "ball_logic.h"
+#include "ball_control.h"
 #include "matrix.h"
 typedef unsigned char uc;
 
@@ -221,44 +223,123 @@ void Player1_tick(){
 			//Working on logic to call tick function to display paddle 1	
 			//LCD_DisplayString(1, "P1:");		
 			///p1_paddle_Tick();	
-			p1_paddle_Tick(P1_START);		
+			p1_paddle_Tick(p1_display);		
 			//Will display 3 light paddle on left side of screen
 			break;
+	}
+	
+}
+//Player2 State Machine
+enum Player2_States{P2_START, P2_SHOW_PADDLE} p2_state;
+void Player2_tick(){
+	
+	switch(p2_state)
+	{//State Transitions
+		case P2_START:
+		if (ready==1)
+		{
+			p2_state = P2_SHOW_PADDLE;
+			break;
+		}
+		p2_state = P2_START;
+		break;
+		case P2_SHOW_PADDLE:
+		if (reset==1)
+		{
+			//break out and start game over
+			//will handle later
+		}
+		break;
+	}
+	
+	switch (p2_state)
+	{//State Actions
+		case P2_START:
+		break;
+		case P2_SHOW_PADDLE:
+		//Working on logic to call tick function to display paddle 1
+		//LCD_DisplayString(1, "P1:");
+		///p1_paddle_Tick();
+		p2_paddle_Tick(p2_display);
+		//Will display 3 light paddle on left side of screen
+		break;
+	}
+	
+}
+
+enum Ball_States{Ball_Start, Show_ball} bt_state;
+void Ball_Tick(){
+	switch(bt_state)
+	{//State Transitions
+		case Ball_Start:
+			if (ready==1){
+				bt_state = Show_ball;}
+			else{bt_state=Ball_Start;}
+		break;
+		case Show_ball:
+			if (reset==1)
+			{
+				//break out and start game over
+				//will handle later
+			}
+			break;
+		default:
+		break;
+	}
+	switch(bt_state)
+	{//State Actions
+		case Ball_Start:
+		break;
+		case Show_ball:
+			MakeBall_Tick();
+			break;
+		default:
+		break;
 	}
 	
 }
 
 int main(void)
 {
-	DDRB = 0xFF; PORTB = 0x00; // PORTB set to output, outputs init 0s
-	DDRC = 0xF0; PORTC = 0x0F; // PC7..4 outputs init 0s, PC3..0 inputs init 1s
-	DDRA = 0xFF; PORTA = 0x00; //outputs
-	DDRD = 0xFF; PORTD = 0x00;
+	DDRA = 0xFF; PORTA = 0x00; //PORTA = output x-axis (rows) for LED matrix
+	DDRB = 0xFF; PORTB = 0x00; // PORTB = output y-axis (columns) for LED matrix
+	DDRC = 0xC0; PORTC = 0x1F; //PORTC = pins 6 & 7 output to LCD E & RS
+							   //PORTC = pins 0 - 4 inputs to game
+							   //pin 0 = start
+							   //pin 1 & 2 = player1 up & down
+							   //pin 3 & 4 = player2 up & down
+	DDRD = 0xFF; PORTD = 0x00; //PORTD output to LCD
 	
 	
 	//Period for the tasks
 	unsigned long int Menu_calc = 200;
-	unsigned long int Player1_calc = 200;
-	unsigned long int LCD_calc = 20;
+	unsigned long int Player1_calc = 100;
+	unsigned long int Player2_calc = 100;
+	unsigned long int Ball_calc = 50;
+	unsigned long int Matrix_calc = 5;
 	
 	
 	//Greatest common divisor for all tasks or smallest time unit for tasks.
 	unsigned long int tempGCD = 1;
 	tempGCD = findGCD(Menu_calc, Player1_calc);
-	//tempGCD = findGCD(tempGCD, LCD_calc);
+	tempGCD = findGCD(tempGCD,Player2_calc);
+	tempGCD = findGCD(tempGCD, Ball_calc);
+	tempGCD = findGCD(tempGCD,Matrix_calc);
 	
 	//Greatest common divisor for all tasks or smallest time unit for tasks.
 	unsigned long int GCD = tempGCD;
 
 	//Recalculate GCD periods for scheduler
-	unsigned long int Menu_period = Menu_calc/GCD;
-	unsigned long int Player1_period = Player1_calc/GCD;
-	unsigned long int LCD_period = LCD_calc/GCD;
+	unsigned long int Menu_period = Menu_calc/GCD; //1
+	unsigned long int Player1_period = Player1_calc/GCD;//2
+	unsigned long int Ball_period = Ball_calc/GCD;//3
+	unsigned long int Player2_period = Player2_calc/GCD;//4
+	unsigned long int Matrix_period = Matrix_calc/GCD;//5
 
 	
 	//Declare an array of tasks
-	static task task1, task2/*, task3*/;
-	task *tasks[] = { &task1, &task2, /*&task3*/ };
+	static task task1, task2, task3, task4, task5;
+	task *tasks[] = { &task1, &task2, &task3, &task4, &task5};
 	const unsigned short numTasks = sizeof(tasks) / sizeof(task*);
 	
 	//task1
@@ -271,11 +352,22 @@ int main(void)
 	task2.period = Player1_period;//Task Period.
 	task2.elapsedTime = Player1_period;//Task current elapsed time.
 	task2.TickFct = &Player1_tick;//Function pointer for the tick.
-	/*// Task 3
-	task2.state = 0;//Task initial state.
-	task2.period = LCD_period;//Task Period.
-	task2.elapsedTime = LCD_period;//Task current elapsed time.
-	task2.TickFct = &LCD;//Function pointer for the tick.*/
+	// Task 3
+	task3.state = 0;//Task initial state.
+	task3.period = Player2_period;//Task Period.
+	task3.elapsedTime = Player2_period;//Task current elapsed time.
+	task3.TickFct = &Player2_tick;//Function pointer for the tick.
+	// Task 4
+	task4.state = 0;//Task initial state.
+	task4.period = Ball_period;//Task Period.
+	task4.elapsedTime = Ball_period;//Task current elapsed time.
+	task4.TickFct = &Ball_Tick;//Function pointer for the tick.
+	// Task 5
+	task5.state = 0;//Task initial state.
+	task5.period = Matrix_period;//Task Period.
+	task5.elapsedTime = Matrix_period;//Task current elapsed time.
+	task5.TickFct = &Matrix_Tick;//Function pointer for the tick.
+	
 	
 	// Set the timer and turn it on
 	TimerSet(GCD);

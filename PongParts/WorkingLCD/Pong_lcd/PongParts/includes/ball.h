@@ -1,7 +1,8 @@
-#ifdef BALL.H
-#define BALL.H
+#ifndef BALL_H
+#define BALL_H
 #include "player1_paddle.h"
 #include "player2_paddle.h"
+#include "ball_control.h"
 #include "bit.h"
 
 typedef unsigned char uc;

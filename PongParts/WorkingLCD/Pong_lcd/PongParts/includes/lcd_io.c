@@ -9,10 +9,10 @@
           
 /*-------------------------------------------------------------------------*/
 
-#define DATA_BUS PORTD		// port connected to pins 7-14 of LCD display
-#define CONTROL_BUS PORTC	// port connected to pins 7 and 6 of LCD disp.
-#define RS 7			// pin number of uC connected to pin 7 of LCD disp.
-#define E 6		// pin number of uC connected to pin 6 of LCD disp.
+#define DATA_BUS PORTD		// portD connected to pins 7-14 of LCD display
+#define CONTROL_BUS PORTC	// portC connected to pins 7 and 6 of LCD disp.
+#define RS 7			// pin 4 of LCD to pin 7 of uC (PORCTC).
+#define E 6		// pin 6 of LCD to pin 6 of uC (PORCTC).
 
 /*-------------------------------------------------------------------------*/
 

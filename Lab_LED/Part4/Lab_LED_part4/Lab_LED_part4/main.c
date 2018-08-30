@@ -205,9 +205,9 @@ int Try_Tick(int try_state) {
 
 	// === Local Variables ===
 	static unsigned char try_turn_on = 0x38; // sets the pattern displayed on columns
-	static unsigned char try_column_num = 0x7F; // grounds column to display pattern
-	uc button = ~PINC &0x02;
-	uc button2 = ~PINC & 0x04;
+	static unsigned char try_column_num = 0xFE; // grounds column to display pattern
+	uc button = ~PINC &0x08;
+	uc button2 = ~PINC & 0x10;
 	uc top = 0x07;
 	uc bottom = 0xE0;
 	//uc max_turn_on =
@@ -283,9 +283,9 @@ int Try_Tick(int try_state) {
 		default: 
 		break;
 	}
-	matrix_display(try_turn_on,try_column_num);
-	//PORTA = try_turn_on; // PORTA displays column pattern
-	//PORTB = try_column_num; // PORTB selects column to display pattern
+	//matrix_display(try_turn_on,try_column_num);
+	PORTA = try_turn_on; // PORTA displays column pattern
+	PORTB = try_column_num; // PORTB selects column to display pattern
 
 	return try_state;
 }
@@ -468,8 +468,7 @@ int main(void)
 	PORTA = 0x00; //init port A to 0's
 	DDRB = 0xFF; //set port B to output
 	PORTB = 0x00; //init port B to 0's
-	DDRC = 0x00; //set port C to intput
-	PORTC = 0xFF; //init port C to 1's
+	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
 	
 	
 	const unsigned long timerPeriod =100;

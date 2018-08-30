@@ -1,141 +1,104 @@
 #ifndef PLAYER2_PADDLE_H
 #define PLAYER2_PADDLE_H
 #include "bit.h"
+#include "shared_variables.h"
+#include "matrix.h"
 ////////////////////////////////////////////////////////////////////////////////
+//Player2 Names and all that
+/*
 enum P2_Paddle_States{P2P_START, P2P_PRESS, P2P_RELEASE, P2P_UP, P2P_DOWN, P2P_RESET} p2p_state;
 void p2_paddle_Tick(){
-	//Table Below of Matrix to make it easier to 
-	//visualize the possible output
-	/*int a[3][4] = {
-		{0, 1, 2, 3} ,     initializers for row indexed by 0 
-		{4, 5, 6, 7} ,     initializers for row indexed by 1 
-		{8, 9, 10, 11}     initializers for row indexed by 2 
 	*/
-	/*A0 0 |  |  |  |  |  |  |  |  |
-	  A1 0 |  |  |  |  |  |  |  |  |
-	  A2 1 |  |  |  |  |  |  |  |  |
-	  A3 1 |  |  |  |  |  |  |  |  |
-	  A4 1 |  |  |  |  |  |  |  |  |
-	  A5 1 | @|  |  |  |  |  |  |  |
-	  A6 0 | @|  |  |  |  |  |  |  |
-	  A7 0 | @|  |  |  |  |  |  |  |
-  			1  1  0  0  0  0  1  1  
-		    B0 B1 B2 B3 B4 B5 B6  B7 */
-	//add ms delay at end of each for loop
-	  /*uc matrix[8][8]= { {0,0,0,0,0,1,1,1},//Row A0
-						   {0,0,0,0,0,0,0,0},//Row A1
-						   {0,0,0,0,0,0,0,0},//Row A2
-						   {0,0,0,0,0,0,0,0},//Row A3
-						   {0,0,0,0,0,0,0,0},//Row A4
-						   {0,0,0,0,0,0,0,0},//Row A5
-						   {0,0,0,0,0,0,0,0},//Row A6
-						   {0,0,0,0,0,0,0,0} };//Row A7
-						//  0 1 2 3 4 5 6 7 */ //Matrix will print 
-uc up_button = ~PINC & 0x01; //C0
-uc down_button = ~PINC & 0x02;//C1
-uc reset_button = ~PINC & 0x04;//C2
+enum P2_Paddle_States {p2_display, p2_move_up, p2_release, p2_move_down,p2_stay};
+int p2_paddle_Tick(int p2_state) {
 
-	switch(p2p_state)
-	{
-		case P2P_START:
-			if (!up_button && !down_button)
-			{
-				p2p_state = P2P_START; //Stay in start if no button pressed
-			}
-			else if (up_button && !down_button)
-			{
-				p2p_state = P2P_UP;//C0 = press
-			}
-			else if (!up_button && down_button) {
-				p2p_state = P2P_DOWN;//C1 = press
-			}
-			else if (reset_button)
-			{
-				p2p_state = P2P_RESET;//C2 =press start player1 over
-			}
+	// === Local Variables ===
+	static unsigned char p2_turn_on = 0x38; // sets the pattern displayed on columns
+	static unsigned char p2_column_num = 0xFE; // grounds column to display pattern
+	uc p2_up = ~PINC &0x08;
+	uc p2_down = ~PINC & 0x10;
+	uc top = 0x0E;
+	uc bottom = 0xE0;
+	//uc max_turn_on =
+	// === Transitions ===
+	switch (p2_state) {
+		case p2_display:
+		if (p2_up)
+		{
+			p2_state = p2_move_up;
+		}
+		else if (p2_down)
+		{
+			p2_state = p2_move_down;
+		}
+		else {p2_state = p2_display;}
 		break;
-		case P2P_UP: 
-			if (reset_button)
-			{
-				p2p_state = P2P_RESET;//C2 =press start player1 over
-			}
-			else 
-			{//Move up then read release
-				p2p_state = P2P_RELEASE; 
-			}
+		case p2_move_up:
+		if (!p2_up)
+		{p2_state = p2_stay;}
+		
+		if (p2_up)
+		{p2_state = p2_move_up;}
 		break;
-		case P2P_DOWN:
-			if (reset_button)
-			{
-				p2p_state = P2P_RESET;//C2 =press start player1 over
-			}
-			else
-			{//Move down then read release
-				p2p_state = P2P_RELEASE;}
+		case p2_move_down:
+		if (!p2_down)
+		{
+			p2_state = p2_stay;
+		}
 		break;
-		case P2P_RELEASE:
-			if (!up_button && !down_button )
-			{//buttons released
-				p2p_state = P2P_PRESS;
-			}
-			else if (reset_button)
-			{
-				p2p_state = P2P_RESET;
-			}
-			else{p2p_state = P2P_RELEASE;}
+		case p2_stay:
+		p2_state = p2_stay;
 		break;
-		case P2P_PRESS:
-			if (up_button && !down_button)
-			{
-				//Move up 
-				p2p_state = P2P_UP;
-			}
-			else if (!up_button && down_button)
-			{
-				p2p_state = P2P_DOWN;
-			}
-			else if (reset_button)
-			{
-				p2p_state = P2P_RESET;
-			}
-			else {p2p_state=P2P_PRESS;}
-			break;
-		case P2P_RESET:
-			p2p_state = P2P_START;
-			break;
+		break;
 		default:
+		p2_state = p2_stay;
 		break;
 	}
 	
-	switch(p2p_state)
-	{//State Actions
-		case P2P_START:
-			//call function that displays player1
-			//paddle in bottom right corner PORTA or y-comp=0xE0
+	// === Actions ===
+	switch (p2_state) {
+		case p2_display:   // illuminate LED in First col
+		p2_turn_on = p2_turn_on; // display far left column
+		p2_column_num = p2_column_num; // pattern illuminates top row
 		break;
-		case P2P_UP:
-		//Call function that moves ball up
-		//Function will increase ball y-comp, shift (PORTA) to LEFT 
+		case p2_move_up:
+		if (p2_turn_on > top){
+		p2_turn_on = (p2_turn_on >> 1); }
+		
+		p2_turn_on = p2_turn_on;
+		p2_column_num = p2_column_num;
 		break;
-		case P2P_DOWN:
-		//Call function that moves ball down
-		//Function will decrease ball y-comp, shift (PORTA) to RIGHT
+		case p2_move_down:
+		if (p2_turn_on < bottom){
+		p2_turn_on = (p2_turn_on << 1);}
+		
+		p2_turn_on =p2_turn_on;
+		p2_column_num = p2_column_num;
 		break;
-		case P2P_RELEASE:
+		case p2_stay:
+		p2_turn_on = p2_turn_on;
+		p2_column_num = p2_column_num;
 		break;
-		case P2P_PRESS:
-		break;
-		case P2P_RESET:
-			reset = 1;
-			//Handle reset outside this state machine
-		break;
+		// else if far right column was last to display (grounded)
+		//else if (column_sel == 0xFE) {
+		//column_sel = 0x7F; // resets display column to far left column
+		//column_val = column_val << 1; // shift down illuminated LED one row
+		//}
+		// else Shift displayed column one to the right
+		//else {
+		//	column_sel = (column_sel >> 1) | 0x80;
+		//}
+		
 		default:
 		break;
 	}
-	
-	//Will handle output here
-	//PORTA = row_on; //Turns on row Ax
-	//PORTB = column_grnd; //Grounds column Bx
+		p2MatrixRow= p2_turn_on;
+		p2MatrixColumn = p2_column_num;
+		//matrix_display(p1_turn_on,p1_column_num);
+		//PORTA = try_turn_on; // PORTA displays column pattern
+		//PORTB = try_column_num; // PORTB selects column to display pattern
+
+	return p2_state;
 }
 #endif //PLAYER2_PADDLE_H
 
